@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Plan My Vacation</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+<div th:fragment="explore(name,image)" class="col-md-3">
+    <div class="thumbnail">
+        <a href="#" target="_blank">
+            <div style="height: 20vh; overflow: hidden;">
+<!--                <img th:src="@{'assets/' + ${image}}" class="img-fluid" alt="top-places">-->
+                <img th:src="@{assets/{img}(img=${image})}" class="img-fluid" alt="top-places">
+            </div>
+            <div class="caption d-flex justify-content-center">
+                <p th:text="${name}">-Top places for Barcelona-</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
+<a th:fragment="place" href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+    <div class="d-flex w-100 align-items-center justify-content-between">
+        <strong class="mb-1">List group item heading</strong>
+        <small class="text-muted">Tues</small>
+    </div>
+    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+</a>
+<!-- The same as above but styled as ACTIVE-->
+<!--<a th:fragment="place" href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
+    <div class="d-flex w-100 align-items-center justify-content-between">
+        <strong class="mb-1">List group item heading</strong>
+        <small>Wed</small>
+    </div>
+    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+</a>-->
+
+
+</body>
+</html>
