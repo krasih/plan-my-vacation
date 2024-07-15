@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Plan My Vacation</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+
+<nav th:fragment="navbar" class="col-12 px-2 py-4 navbar navbar-inverse navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Plan My Vacation</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right list-group list-group-horizontal">
+            <li style="background-color: rgba(0, 0, 0, 0)">
+                <!--                    <a href="#"><span class="glyphicon glyphicon-user"></span>Sign Up</a>-->
+                <button class="btn btn-outline-success me-2 text-white" type="button">Sign Up</button>
+            </li>
+            <li style="background-color: rgba(0, 0, 0, 0)">
+                <!--                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>-->
+                <button class="btn btn-outline-success me-2 text-white" type="button">Login</button>
+            </li>
+            <li style="background-color: rgba(0, 0, 0, 0)">
+                <!--                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>-->
+                <button class="btn btn-outline-success me-2 text-white" type="button">Logout</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<footer th:fragment="footer" class="col-12 mt-auto px-2 py-2 bg-dark d-flex flex-wrap justify-content-between align-items-center border-top" style="height: 70px; ">
+    <p class="col-md-4 mb-0 ps-4 text-light">&copy; 2024 Krasimir Hristov</p>
+
+    <ul class="nav col-md-4 pe-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Contacts</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Careers</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">About</a></li>
+    </ul>
+</footer>
+
+
+
+</body>
+</html>
