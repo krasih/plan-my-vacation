@@ -18,18 +18,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/test")
-    public String test() {
-
-        return "test";
-    }
-
-    @GetMapping("/test2")
-    public String test2() {
-
-        return "test2";
-    }
-
     @GetMapping("/register")
     public String register() {
 
@@ -40,6 +28,42 @@ public class HomeController {
     public String login() {
 
         return "login";
+    }
+
+    @GetMapping("/plan")
+    public String plan() {
+
+        return "plan";
+    }
+
+    @GetMapping("/plan-create")
+    public String planCreate() {
+
+        return "plan-create";
+    }
+
+    @GetMapping("/plans")
+    public String plans() {
+
+        return "plans";
+    }
+
+    @GetMapping("/users")
+    public String users() {
+
+        return "users";
+    }
+
+    @GetMapping("/jobs")
+    public String jobs() {
+
+        return "jobs";
+    }
+
+    @GetMapping("/contacts")
+    public String contacts() {
+
+        return "contacts";
     }
 
 }

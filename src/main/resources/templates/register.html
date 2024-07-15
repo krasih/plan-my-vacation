@@ -26,29 +26,41 @@
                   class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
 
-                <div class="mb-3 row" style="display: flex; flex-direction: column; align-items: center; gap: 2rem">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem">
+
+                    <!-- VALIDATION EXAMPLE -->
+<!--                    <div class="col-sm-10 form-floating">-->
+<!--                        <input type="text" class="form-control is-invalid" id="name">-->
+<!--                        <label for="name">invalid</label>-->
+<!--                    </div>-->
+
                     <!-- USERNAME -->
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" placeholder="username">
+                    <div class="col-sm-10 form-floating">
+                        <input type="text" class="form-control" id="username" >
+                        <label for="username">username</label>
                     </div>
 
                     <!-- EMAIL -->
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <div class="col-sm-10 form-floating">
+                        <input type="email" class="form-control" id="email">
+                        <label for="email">email</label>
                     </div>
 
                     <!-- PASSWORD -->
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="password" placeholder="password">
+                    <div class="col-sm-10 form-floating">
+                        <input type="password" class="form-control" id="password">
+                        <label for="password">password</label>
                     </div>
 
                     <!-- CONFIRM PASSWORD -->
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password">
+                    <div class="col-sm-10 form-floating">
+                        <input type="password" class="form-control" id="confirm_password">
+                        <label for="confirm_password">confirm password</label>
                     </div>
 
+
                     <!-- REGISTER -->
-                    <div class="row d-flex justify-content-center">
+                    <div class="row">
                         <div class="col col-md-4">
                             <div class="button-holder">
                                 <input type="submit" class="btn btn-warning btn-lg" value="Register"/>
