@@ -16,7 +16,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String category;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PlaceType placeType;
 

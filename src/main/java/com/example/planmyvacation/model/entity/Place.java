@@ -30,7 +30,7 @@ public class Place {
     @Enumerated(EnumType.STRING)
     private PlaceType type;
 
-    @OneToMany()                                // make fetch = fetchType.EAGER  ???
+    @ManyToMany                                // make fetch = fetchType.EAGER  ???
     private Set<Category> category;
 
     @ManyToOne(optional=false)

@@ -23,6 +23,11 @@ public class Location {
     public Location() {
     }
 
+    public Location(Country country, City city) {
+        this.country = country;
+        this.city = city;
+    }
+
     public long getId() {
         return id;
     }

@@ -14,8 +14,16 @@ public class City {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "country_id", referencedColumnName = "id")
+    private Country country;
+
 
     public City() {
+    }
+
+    public City(String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -34,5 +42,18 @@ public class City {
     public City setName(String name) {
         this.name = name;
         return this;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public City setCountry(Country country) {
+        this.country = country;
+        return this;
+    }
+
+    public String getFullName() {
+        return name + ", " + country.getName();
     }
 }
