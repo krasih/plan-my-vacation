@@ -22,7 +22,7 @@ public class Itinerary {
     @Column(name = "is_last_day")
     private boolean isLastDay;
 
-    @OneToMany(mappedBy = "itinerary", orphanRemoval=true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Activity> activities;
 
 //    @JoinColumn(name = "plan_id")

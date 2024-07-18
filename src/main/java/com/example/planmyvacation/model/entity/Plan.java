@@ -25,10 +25,13 @@ public class Plan {
     @ManyToOne(optional = false)
     private Location location;
 
-    @OneToOne(optional = false, orphanRemoval=true, cascade = CascadeType.ALL)
-    private Itinerary myPlaces;
+//    @OneToOne(optional = false, cascade = CascadeType.ALL, orphanRemoval=true)
+//    private Itinerary myPlaces;
 
-    @OneToMany(mappedBy = "plan", orphanRemoval=true, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Activity> myPlaces;
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Itinerary> itineraries;
 
     @ManyToOne(optional = false)
@@ -36,7 +39,16 @@ public class Plan {
 
 
     public Plan() {
-        itineraries = new ArrayList<>();
+
+        this.myPlaces = new ArrayList<>();
+        this.itineraries = new ArrayList<>();
+    }
+
+    public Plan(Instant startDate, Instant endDate, Location location, User user) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.location = location;
+        this.user = user;
     }
 
     public long getId() {
@@ -84,11 +96,20 @@ public class Plan {
         return this;
     }
 
-    public List<Itinerary> getDayPlans() {
+    public List<Activity> getMyPlaces() {
+        return myPlaces;
+    }
+
+    public Plan setMyPlaces(List<Activity> myPlaces) {
+        this.myPlaces = myPlaces;
+        return this;
+    }
+
+    public List<Itinerary> getItineraries() {
         return itineraries;
     }
 
-    public Plan setDayPlans(List<Itinerary> itineraries) {
+    public Plan setItineraries(List<Itinerary> itineraries) {
         this.itineraries = itineraries;
         return this;
     }
