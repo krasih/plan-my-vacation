@@ -17,18 +17,18 @@
             <li style="background-color: rgba(0, 0, 0, 0)">
                 <!--                    <a href="#"><span class="glyphicon glyphicon-user"></span>Sign Up</a>-->
 <!--                <button class="btn btn-outline-success me-2 text-white" type="button">Sign Up</button>-->
-                <button class="btn btn-dark me-1" type="button">Sign Up</button>
+                <a th:href="@{/users/register}" class="btn btn-dark me-1" type="button">Sign Up</a>
             </li>
             <div class="vr bg-light"></div>
             <li style="background-color: rgba(0, 0, 0, 0)">
                 <!--                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>-->
 <!--                <button class="btn btn-outline-success me-2 text-white" type="button">Login</button>-->
-                <button class="btn btn-dark mx-1" type="button">Login</button>
+                <a th:href="@{/users/login}" class="btn btn-dark mx-1" type="button">Login</a>
             </li>
             <li style="background-color: rgba(0, 0, 0, 0)">
                 <!--                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>-->
 <!--                <button class="btn btn-outline-success me-2 text-white" type="button">Logout</button>-->
-                <button class="btn btn-dark mx-1" type="button">Logout</button>
+                <a th:href="@{/logout}"  class="btn btn-dark mx-1" type="button">Logout</a>
             </li>
         </ul>
     </div>

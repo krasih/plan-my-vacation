@@ -20,9 +20,9 @@
         <div class="col-4" style="display: flex; flex-direction: column; justify-content: center">
 
             <!-- FORM -->
-            <form th:method="post"
+            <form th:method="POST"
                   th:action="@{/users/register}"
-                  th:object="${registerDTO}"
+                  th:object="${registerData}"
                   class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
 
@@ -36,26 +36,26 @@
 
                     <!-- USERNAME -->
                     <div class="col-sm-10 form-floating">
-                        <input type="text" class="form-control" id="username" >
+                        <input type="text" class="form-control" id="username" name="username" th:field="*{username}">
                         <label for="username">username</label>
                     </div>
 
                     <!-- EMAIL -->
                     <div class="col-sm-10 form-floating">
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" id="email" name="email" th:field="*{email}">
                         <label for="email">email</label>
                     </div>
 
                     <!-- PASSWORD -->
                     <div class="col-sm-10 form-floating">
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="password" name="password">
                         <label for="password">password</label>
                     </div>
 
                     <!-- CONFIRM PASSWORD -->
                     <div class="col-sm-10 form-floating">
-                        <input type="password" class="form-control" id="confirm_password">
-                        <label for="confirm_password">confirm password</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                        <label for="confirmPassword">confirm password</label>
                     </div>
 
 

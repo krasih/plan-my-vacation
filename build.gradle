@@ -22,6 +22,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    // TODO: SECURITY - replace the line below with the 2 dependencies above
+//    implementation 'org.springframework.security:spring-security-crypto'
+
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     implementation 'net.datafaker:datafaker:2.3.1'
