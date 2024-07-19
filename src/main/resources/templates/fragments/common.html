@@ -7,42 +7,51 @@
 
 <body>
 
+<!-- FRAGMENT: NAVBAR -->
+<nav th:fragment="navbar(hideStartPlanning)" class="col-12 px-4 py-3 bg-dark text-white" data-bs-theme="dark">
+    <div class="d-flex ms-5">
 
-<nav th:fragment="navbar" class="col-12 px-2 py-4 navbar navbar-inverse navbar-dark bg-dark">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Plan My Vacation</a>
+        <!-- WEBSITE HOME -->
+        <div class="me-5 p-2 d-flex align-items-center">
+            <a class="navbar-brand border p-2" th:href="@{/home}">Plan My Vacation</a>
         </div>
-        <ul class="nav navbar-nav navbar-right list-group list-group-horizontal">
-            <li style="background-color: rgba(0, 0, 0, 0)">
-                <!--                    <a href="#"><span class="glyphicon glyphicon-user"></span>Sign Up</a>-->
-<!--                <button class="btn btn-outline-success me-2 text-white" type="button">Sign Up</button>-->
-                <a th:href="@{/users/register}" class="btn btn-dark me-1" type="button">Sign Up</a>
-            </li>
-            <div class="vr bg-light"></div>
-            <li style="background-color: rgba(0, 0, 0, 0)">
-                <!--                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>-->
-<!--                <button class="btn btn-outline-success me-2 text-white" type="button">Login</button>-->
-                <a th:href="@{/users/login}" class="btn btn-dark mx-1" type="button">Login</a>
-            </li>
-            <li style="background-color: rgba(0, 0, 0, 0)">
-                <!--                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>-->
-<!--                <button class="btn btn-outline-success me-2 text-white" type="button">Logout</button>-->
-                <a th:href="@{/logout}"  class="btn btn-dark mx-1" type="button">Logout</a>
-            </li>
-        </ul>
+
+        <!-- MENUS -->
+        <div class="me-3 p-2 flex-fill align-self-center">
+            <div class="d-flex justify-content-between">
+
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/plan-create}"
+
+                       th:hidden="${hideStartPlanning}"
+                       class="btn btn-dark me-1 py-0 ">Start planning</a>
+                </div>
+
+                <div class="row gx-0">
+                    <div class="col-auto">
+                        <a th:href="@{/users/register}" class="btn btn-dark me-1 py-0">Sign Up</a>
+                    </div>
+                    <div class="vr bg-light"></div>
+                    <div class="col-auto">
+                        <a th:href="@{/users/login}" class="btn btn-dark mx-1 py-0" type="button">Login</a>
+                    </div>
+                    <div class="col-auto">
+                        <a th:href="@{/logout}"  class="btn btn-dark mx-1 py-0" type="button">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </nav>
 
 
+
+<!-- FRAGMENT: FOOTER -->
 <footer th:fragment="footer" class="col-12 mt-auto px-2 py-2 bg-dark d-flex flex-wrap justify-content-between align-items-center" style="height: 70px; ">
     <p class="col-md-4 mb-0 ps-4 text-light">&copy; 2024 Krasimir Hristov</p>
 
     <ul class="nav col-md-4 pe-4 justify-content-end ">
-<!--        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Home</a></li>-->
-<!--        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Contacts</a></li>-->
-<!--        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Careers</a></li>-->
-<!--        <li class="nav-item"><a href="#" class="nav-link px-2 text-light">About</a></li>-->
         <li class="nav-item"><a href="#" class="btn btn-dark mx-1">Home</a></li>
         <div class="vr bg-light"></div>
         <li class="nav-item"><a href="#" class="btn btn-dark mx-1">Contacts</a></li>
