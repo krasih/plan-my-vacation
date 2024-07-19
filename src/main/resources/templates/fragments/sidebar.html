@@ -22,14 +22,85 @@
 </div>
 
 
+<!-- actual/current fragments PLACE -->
+<li th:fragment="place" class="list-group-item list-group-item-action py-3 lh-tight">
 
-<a th:fragment="place" href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-    <div class="d-flex w-100 align-items-center justify-content-between">
-        <strong class="mb-1">List group item heading</strong>
-        <small class="text-muted">Tues</small>
-    </div>
-    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-</a>
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <div class="d-flex flex-column col-10">
+                <div class="row gy-2">
+
+                    <!-- ITEM ORDER -->
+                    <span id="order" class="col-auto position-absolute top-3 start-0 translate-middle badge rounded-pill bg-info" style="--bs-bg-opacity: .25;">
+                        <strong class="text-primary align-self-center">1</strong>
+                    </span>
+
+                    <!-- ITEM HEADER -->
+                    <div class="row gx-5">
+                        <!-- ITEM TITLE -->
+                        <strong class="col-auto mb-1">
+                            List group item heading
+                        </strong>
+
+                        <!-- ITEM RATING -->
+                        <span class="col-auto badge rounded-pill text-bg-warning align-self-center">
+                            Rating: 5.00
+                        </span>
+                    </div>
+
+                    <!-- ITEM DESCRIPTION -->
+                    <div class="mb-1 small">
+                        Some placeholder content in a paragraph below the heading and date.
+                        Some placeholder content in a paragraph below the heading and date.
+                        Some placeholder content in a paragraph below the heading and date.
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="d-grid gap-2 d-md-block">
+                        <!-- BUTTON: DELETE -->
+                        <button class="btn btn-primary btn-sm" type="button">Delete</button>
+
+                        <!-- BUTTON: MOVE TO -->
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Move to
+                            </button>
+<!-- TODO: Implement Thymeleaf to control the list items -->
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">My Places</a></li>
+                                <li><a class="dropdown-item" href="#">Day 1</a></li>
+                                <li><a class="dropdown-item" href="#">Day 2</a></li>
+                                <li><a class="dropdown-item" href="#">Day 3</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div style="height: 100px; overflow: hidden;">
+                <img th:src="@{images/places_to_visit_barcelona.jpg}" class="h-100 img-thumbnail" alt="top-places">
+            </div>
+        </div>
+
+</li>
+
+
+
+
+
+
+
+
+
+
+
+<!-- OLD fragments PLACE and ACTIVE_PLACE -->
+<!--<a th:fragment="place" href="#" class="list-group-item list-group-item-action py-3 lh-tight">-->
+<!--    <div class="d-flex w-100 align-items-center justify-content-between">-->
+<!--        <strong class="mb-1">List group item heading</strong>-->
+<!--        <small class="text-muted">Tues</small>-->
+<!--    </div>-->
+<!--    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>-->
+<!--</a>-->
 
 <!-- The same as above but styled as ACTIVE-->
 <!--<a th:fragment="active_place" href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
