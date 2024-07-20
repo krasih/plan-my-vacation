@@ -25,13 +25,13 @@
                 <form
                         th:method="POST"
                         th:action="@{/plans/create}"
-
+                        th:object="${planData}"
                         class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center align-items-center">
 
                     <!-- INPUT: LOCATION -->
                     <div class="form-group col-md-6 mb-3">
-                        <label for="location" class="text-center text-white font-weight-bold">Where</label>
-                        <select id="location" name="location" class="form-control">
+                        <label th:for="cityName" class="text-center text-white font-weight-bold">Where</label>
+                        <select th:field="*{cityName}" id="cityName" name="cityName" class="form-control">
                             <option value="">- Select a location -</option>
                             <optgroup th:each="entry : ${countriesData}" th:label="${entry.key}">
                                 <option th:each="city: ${entry.value}"
@@ -43,14 +43,14 @@
 
                     <!-- INPUT: START DATE -->
                     <div class="form-group col-md-6 mb-3">
-                        <label for="start_date" class="text-center text-white font-weight-bold">From</label>
-                        <input type="date" class="form-control" id="start_date"/>
+                        <label th:for="startDate" class="text-center text-white font-weight-bold">From</label>
+                        <input th:field="*{startDate}" type="date" class="form-control" id="startDate"/>
                     </div>
 
                     <!-- INPUT: END DATE -->
                     <div class="form-group col-md-6 mb-3">
-                        <label for="end_date" class="text-center text-white font-weight-bold">To</label>
-                        <input type="date" class="form-control" id="end_date"/>
+                        <label th:for="endDate" class="text-center text-white font-weight-bold">To</label>
+                        <input th:field="*{endDate}" type="date" class="form-control" id="endDate"/>
                     </div>
 
 

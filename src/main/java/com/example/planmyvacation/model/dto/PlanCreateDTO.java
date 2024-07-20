@@ -6,41 +6,42 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 public class PlanCreateDTO {
 
-    private Location location;
+    private String cityName;
 
-    private Instant startDate;
+    private LocalDate startDate;
 
-    private Instant endDate;
+    private LocalDate endDate;
 
     public PlanCreateDTO() {
     }
 
-    public Location getLocation() {
-        return location;
+    public String getCityName() {
+        return cityName;
     }
 
-    public PlanCreateDTO setLocation(Location location) {
-        this.location = location;
+    public PlanCreateDTO setCityName(String cityName) {
+        this.cityName = cityName;
         return this;
     }
 
-    public Instant getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public PlanCreateDTO setStartDate(Instant startDate) {
+    public PlanCreateDTO setStartDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public Instant getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public PlanCreateDTO setEndDate(Instant endDate) {
+    public PlanCreateDTO setEndDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }
