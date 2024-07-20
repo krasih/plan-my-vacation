@@ -18,7 +18,7 @@ public class Country {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)
     private List<City> cities;
 
 

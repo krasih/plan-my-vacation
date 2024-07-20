@@ -24,12 +24,6 @@ public class HomeController {
         return "plan";
     }
 
-    @GetMapping("/plan-create")
-    public String planCreate() {
-
-        return "plan-create";
-    }
-
     @GetMapping("/plans")
     public String plans() {
 

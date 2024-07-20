@@ -23,17 +23,20 @@
             <div class="container">
                 <h2 class="text-center text-white">Plan a new trip</h2>
                 <form
-                        th:action="@{/plans/create}"
                         th:method="POST"
+                        th:action="@{/plans/create}"
+
                         class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center align-items-center">
 
                     <!-- INPUT: LOCATION -->
                     <div class="form-group col-md-6 mb-3">
-                        <label class="text-center text-white font-weight-bold" for="location">Where</label>
-                        <select id="location" class="form-control">
+                        <label for="location" class="text-center text-white font-weight-bold">Where</label>
+                        <select id="location" name="location" class="form-control">
                             <option value="">- Select a location -</option>
-                            <optgroup label="Country">
-                                <option>City</option>
+                            <optgroup th:each="entry : ${countriesData}" th:label="${entry.key}">
+                                <option th:each="city: ${entry.value}"
+                                        th:value="${city.getName()}"
+                                        th:text="${city.getName()}">City</option>
                             </optgroup>
                         </select>
                     </div>
