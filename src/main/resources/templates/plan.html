@@ -18,17 +18,14 @@
 <body class="p-0">
 
 
-
 <div class="d-flex align-items-start flex-column text-bg-light" style="height: 100vh;">
 
     <!-- NAVIGATION -->
     <nav th:replace="~{fragments/common::navbar(hideStartPlanning='false')}"></nav>
 
 
-
-
     <!-- CONTENT -->
-    <div class="col-12 gx-0 row flex-grow-1" style="max-height: 83vh">
+    <div th:object="${planDetailsData}" class="col-12 gx-0 row flex-grow-1" style="max-height: 83vh">
 
         <!-- SIDEBAR -->
         <div class="col-6 overflow-auto" style="max-height: 100%">
@@ -41,9 +38,14 @@
                 </div>
 
                 <!--PLAN NAME-->
-                <div class="position-absolute top-100 start-50 translate-middle shadow bg-white rounded" style="width: 60%; height: 10vh; margin-top:-7%">
-                    <div class="d-flex justify-content-center flex-nowrap pt-2 text-dark"><h2>Trip to Barcelona</h2></div>
-                    <div class="d-flex justify-content-center flex-nowrap pb-2 text-dark">17/7 - 23/7</div>
+                <div class="position-absolute top-100 start-50 translate-middle shadow bg-white rounded" style="width: 60%; height: 5.5em; margin-top:-7%">
+                    <div class="d-flex justify-content-center flex-nowrap pt-2 text-dark">
+                        <h2>Trip to <span th:text="*{location.getCity().name}">City</span></h2>
+                    </div>
+                    <div class="d-flex justify-content-center flex-nowrap text-dark">
+<!--                        <span th:text="|*{startDate} - *{endDate}|">start date</span>-->
+                        <small th:text="*{getDates()}">1/9/84 - 1/9/84</small>
+                    </div>
                 </div>
             </div>
 
@@ -64,13 +66,13 @@
                                 <div class="row d-flex justify-content-around">
 
                                     <!-- 1st LINK & PIC -->
-                                    <div th:replace="~{fragments/sidebar::explore(name='Top places for Barcelona', image='top_places_barcelona.jpg')}"></div>
+                                    <div th:replace="~{fragments/sidebar::explore(name='Top places for ' + *{location.getCity().name}, image='top_places_barcelona.jpg')}"></div>
 
                                     <!-- 2nd LINK & PIC -->
-                                    <div th:replace="~{fragments/sidebar::explore(name='All places to visit in Barcelona', image='places_to_visit_barcelona.jpg')}"></div>
+                                    <div th:replace="~{fragments/sidebar::explore(name='All places to visit in ' + *{location.getCity().name}, image='places_to_visit_barcelona.jpg')}"></div>
 
                                     <!-- 3rd LINK & PIC -->
-                                    <div th:replace="~{fragments/sidebar::explore(name='All places to eat in Barcelona', image='places_to_eat_barcelona.jpg')}"></div>
+                                    <div th:replace="~{fragments/sidebar::explore(name='All places to eat in ' + *{location.getCity().name}, image='places_to_eat_barcelona.jpg')}"></div>
 
                                 </div>
                             </div>
@@ -85,12 +87,9 @@
                         <h6 class="display-6" style="font-size: 1.75rem;">My Places</h6>
                         <div class="mt-4">
 
-                            <!-- ITINERARY LIST -->
-                            <!-- TODO: Implement Thymeleaf to control the list items -->
-                            <ul class="list-group list-group-flush border-bottom scrollbar">
-                                <li th:replace="~{fragments/sidebar::place}"></li>
-                                <li th:replace="~{fragments/sidebar::place}"></li>
-                                <li th:replace="~{fragments/sidebar::place}"></li>
+                            <!-- PLACES LIST -->
+                            <ul th:each="myPlace: *{myPlaces}" class="list-group list-group-flush border-bottom scrollbar">
+                                <li th:replace="~{fragments/sidebar::place(${myPlace})}"></li>
                             </ul>
 
                         </div>
@@ -109,56 +108,30 @@
                             <div class="accordion" id="accordionPanelsStayOpenExample">
 
                                 <!-- TODO: Implement Thymeleaf to control the list items -->
-                                <ul class="list-group list-group-flush">
+                                <ul th:each="itinerary: *{itineraries}" class="list-group list-group-flush">
+
                                     <li class="list-group-item">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                                                    Day 1
+                                                <button th:text="|Day ${itinerary.getDayNo()}|"  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="|#panel_${itinerary.getDayNo()}|" aria-expanded="false" th:aria-controls="|panel_${itinerary.getDayNo()}|">
+                                                    Day 2
                                                 </button>
                                             </h2>
-                                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                                            <div th:id="|panel_${itinerary.getDayNo()}|" class="accordion-collapse collapse">
                                                 <div class="accordion-body">
 
                                                     <!-- TODO: Implement Thymeleaf to control the list items -->
-                                                    <ul class="list-group list-group-flush border-bottom scrollbar">
-                                                        <li th:replace="~{fragments/sidebar::place}"></li>
-                                                        <li th:replace="~{fragments/sidebar::place}"></li>
-                                                        <li th:replace="~{fragments/sidebar::place}"></li>
+                                                    <ul th:each="activity: ${itinerary.activities}" class="list-group list-group-flush border-bottom scrollbar">
+
+                                                        <!-- FRAGMENT: ACTIVITY -->
+                                                        <li th:replace="~{fragments/sidebar::activity(${activity})}"></li>
                                                     </ul>
 
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="list-group-item">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                                    Day 2
-                                                </button>
-                                            </h2>
-                                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                                                <div class="accordion-body">
-                                                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                                    Day 3
-                                                </button>
-                                            </h2>
-                                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                                                <div class="accordion-body">
-                                                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+
                                 </ul>
 
                             </div>
@@ -179,15 +152,10 @@
     </div>
 
 
-
-
-
-
     <!-- FOOTER -->
     <footer th:replace="~{fragments/common::footer}"></footer>
 
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -25,11 +25,13 @@ public class Plan {
     @ManyToOne(optional = false)
     private Location location;
 
-//    @OneToOne(optional = false, cascade = CascadeType.ALL, orphanRemoval=true)
-//    private Itinerary myPlaces;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Activity> myPlaces;
+    @ManyToMany/*(cascade = CascadeType.ALL)*/
+    @JoinTable(
+            name = "my_places",
+            joinColumns = { @JoinColumn(name = "plan_id") },
+            inverseJoinColumns = { @JoinColumn(name = "place_id") }
+    )
+    private List<Place> myPlaces;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Itinerary> itineraries;
@@ -96,11 +98,11 @@ public class Plan {
         return this;
     }
 
-    public List<Activity> getMyPlaces() {
+    public List<Place> getMyPlaces() {
         return myPlaces;
     }
 
-    public Plan setMyPlaces(List<Activity> myPlaces) {
+    public Plan setMyPlaces(List<Place> myPlaces) {
         this.myPlaces = myPlaces;
         return this;
     }

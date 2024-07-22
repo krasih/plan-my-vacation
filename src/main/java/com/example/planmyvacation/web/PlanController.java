@@ -2,13 +2,12 @@ package com.example.planmyvacation.web;
 
 import com.example.planmyvacation.model.dto.CityDTO;
 import com.example.planmyvacation.model.dto.PlanCreateDTO;
+import com.example.planmyvacation.model.dto.PlanDetailsDTO;
 import com.example.planmyvacation.service.CountryService;
 import com.example.planmyvacation.service.PlanService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,8 @@ public class PlanController {
         this.countryService = countryService;
     }
 
-    @ModelAttribute("planData")
-    public PlanCreateDTO createEmptyRegisterDTO() {
+    @ModelAttribute("planCreateData")
+    public PlanCreateDTO createEmptyPlanDTO() {
         return new PlanCreateDTO();
     }
 
@@ -36,6 +35,11 @@ public class PlanController {
         return countryService.getAllAsMap();
     }
 
+//    @ModelAttribute("planDetailsData")
+//    public PlanCreateDTO createEmptyRegisterDTO() {
+//        return new PlanDetailsDTO();
+//    }
+
     @GetMapping("/create")
     public String viewPlanCreate() {
 
@@ -44,13 +48,25 @@ public class PlanController {
 
     @PostMapping("/create")
     public String doPlanCreate(
-            PlanCreateDTO planData
+            PlanCreateDTO planCreateData
     ) {
 
-        planService.createPlan(planData);
+        planService.createPlan(planCreateData);
 
         // TODO: Must redirect to the newly created plan and open it for editing
         return "redirect:/plan";
     }
+
+    @GetMapping("/{id}")
+    public String viewPlan(@PathVariable("id") Long id, Model model) {
+
+        PlanDetailsDTO plan = planService.getPlanById(id);
+
+        model.addAttribute("planDetailsData", plan);
+
+        return "plan";
+    }
+
+
 
 }

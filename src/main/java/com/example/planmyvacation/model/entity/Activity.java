@@ -16,8 +16,11 @@ public class Activity {
     @ManyToOne(optional = false)
     private Place place;
 
-    @ManyToOne(optional = false)
+    @ManyToOne()
     private Itinerary itinerary;
+
+    @ManyToOne(optional = false)
+    private Plan plan;
 
 
     public Activity() {
@@ -56,6 +59,15 @@ public class Activity {
 
     public Activity setItinerary(Itinerary itinerary) {
         this.itinerary = itinerary;
+        return this;
+    }
+
+    public Plan getPlan() {
+        return plan;
+    }
+
+    public Activity setPlan(Plan plan) {
+        this.plan = plan;
         return this;
     }
 }

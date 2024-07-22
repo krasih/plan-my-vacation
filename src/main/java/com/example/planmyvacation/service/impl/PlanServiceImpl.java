@@ -1,6 +1,6 @@
 package com.example.planmyvacation.service.impl;
 
-import com.example.planmyvacation.model.dto.PlanCreateDTO;
+import com.example.planmyvacation.model.dto.*;
 import com.example.planmyvacation.model.entity.Itinerary;
 import com.example.planmyvacation.model.entity.Location;
 import com.example.planmyvacation.model.entity.Plan;
@@ -8,12 +8,15 @@ import com.example.planmyvacation.model.entity.User;
 import com.example.planmyvacation.repository.LocationRepository;
 import com.example.planmyvacation.repository.PlanRepository;
 import com.example.planmyvacation.repository.UserRepository;
+import com.example.planmyvacation.service.ActivityService;
+import com.example.planmyvacation.service.ItineraryService;
+import com.example.planmyvacation.service.PlaceService;
 import com.example.planmyvacation.service.PlanService;
+import com.example.planmyvacation.util.Utils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,33 +27,66 @@ public class PlanServiceImpl implements PlanService {
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
     private final PlanRepository planRepository;
+    private final ItineraryService itineraryService;
+    private final ActivityService activityService;
+    private final PlaceService placeService;
 
     public PlanServiceImpl(
             LocationRepository locationRepository,
-            UserRepository userRepository, PlanRepository planRepository) {
+            UserRepository userRepository,
+            PlanRepository planRepository,
+            ItineraryService itineraryService,
+            ActivityService activityService, PlaceService placeService) {
         this.locationRepository = locationRepository;
         this.userRepository = userRepository;
         this.planRepository = planRepository;
+        this.itineraryService = itineraryService;
+        this.activityService = activityService;
+        this.placeService = placeService;
     }
 
     @Override
     public void createPlan(PlanCreateDTO planDTO) {
 
-        // SET Plan
+        Plan plan = setPlan(planDTO);
+
+        planRepository.save(plan);
+    }
+
+//    TODO: Finish the implementation of the following method
+    @Override
+    public List<PlanDetailsDTO> getAll() {
+        return null;
+    }
+
+//    TODO: Finish the implementation of the following method
+    @Override
+    public PlanDetailsDTO getPlanById(long id) {
+
+        return planRepository
+                .findById(id)
+                .map(this::mapToDTO)
+                .orElse(null);
+    }
+
+//    TODO: If need to use this method rises in more classes, consider adding it in some Utils class maybe...
+    private User getCurrentUser() {
 
         // TODO: Fill the USER once the Spring Security is implemented
 //        Optional<User> currentUser = userRepository.findById(userSession.id());
 //        if (currentUser.isEmpty()) return false;
         // TODO: For now just hardcode user="user", (TO DELETE)
-        User user = userRepository.findByUsername("user").get();
+        return userRepository.findByUsername("user").get();
+    }
+
+    private Plan setPlan(PlanCreateDTO planDTO) {
 
         Location location = locationRepository.findByCity_Name(planDTO.getCityName());
-        Instant startDate = toInstant(planDTO.getStartDate());
-        Instant endDate = toInstant(planDTO.getEndDate());
+        Instant startDate = Utils.getInstant(planDTO.getStartDate());
+        Instant endDate = Utils.getInstant(planDTO.getEndDate());
 
-        // TODO: Move this to the mapToEntity() method
         Plan plan = new Plan()
-                .setUser(user)
+                .setUser(getCurrentUser())
                 .setLocation(location)
                 .setStartDate(startDate)
                 .setEndDate(endDate)
@@ -76,33 +112,33 @@ public class PlanServiceImpl implements PlanService {
 
         plan.setItineraries(itineraries);
 
-        // SET Plan END
-
-        planRepository.save(plan);
+        return plan;
     }
 
-//    private PlanCreateDTO mapToEntity(PlanCreateDTO planDTO) {
-//
-//
-//
-//        return new Plan()
-//                .setLocation()
-//                .setStartDate()
-//                .setEndDate()
-//                .setActive();
-//    }
+    private PlanDetailsDTO mapToDTO(Plan plan) {
 
-//    private PlanCreateDTO mapToDTO(Plan plan) {
-//
-//        return new PlanCreateDTO()
-//                .setLocation(plan.getLocation())
-//                .setStartDate(plan.getStartDate())
-//                .setEndDate(plan.getEndDate());
-//    }
+        LocalDate startDate = Utils.getLocalDate(plan.getStartDate());
+        LocalDate endDate = Utils.getLocalDate(plan.getEndDate());
 
-    private Instant toInstant(LocalDate date) {
+//        List<ActivityDTO> myPlaces = activityService.mapAllToDTO(plan.getMyPlaces());
 
-        return date.atStartOfDay().toInstant(ZoneOffset.UTC);
+        List<PlaceDTO> myPlaces = plan.getMyPlaces().stream()
+                .map(placeService::mapToDTO)
+                .toList();
+
+        List<ItineraryDTO> itineraries = plan.getItineraries()
+                .stream()
+                .map(itineraryService::mapToDTO)
+                .toList();
+
+        return new PlanDetailsDTO()
+                .setLocation(plan.getLocation())
+                .setStartDate(startDate)
+                .setEndDate(endDate)
+                .setMyPlaces(myPlaces)
+                .setItineraries(itineraries)
+                .setUser(plan.getUser())
+                .setActive(plan.isActive());
     }
 
 }

@@ -25,7 +25,6 @@ public class Itinerary {
     @OneToMany(mappedBy = "itinerary", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Activity> activities;
 
-//    @JoinColumn(name = "plan_id")
     @ManyToOne(optional = false)
     private Plan plan;
 

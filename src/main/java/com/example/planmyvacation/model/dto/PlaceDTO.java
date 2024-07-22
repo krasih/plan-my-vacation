@@ -1,60 +1,35 @@
-package com.example.planmyvacation.model.entity;
+package com.example.planmyvacation.model.dto;
 
+import com.example.planmyvacation.model.entity.Category;
+import com.example.planmyvacation.model.entity.Location;
 import com.example.planmyvacation.model.enums.PlaceType;
-import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "places")
-public class Place {
+public class PlaceDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false)
     private double rating;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private PlaceType type;
 
-    @ManyToMany                                // make fetch = fetchType.EAGER  ???
     private Set<Category> categories;
 
-    @ManyToOne(optional=false)
     private Location location;
 
-
-    public Place() {
-        categories = new HashSet<>();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Place setId(long id) {
-        this.id = id;
-        return this;
+    public PlaceDTO() {
     }
 
     public double getRating() {
         return rating;
     }
 
-    public Place setRating(double rating) {
+    public PlaceDTO setRating(double rating) {
         this.rating = rating;
         return this;
     }
@@ -63,7 +38,7 @@ public class Place {
         return name;
     }
 
-    public Place setName(String name) {
+    public PlaceDTO setName(String name) {
         this.name = name;
         return this;
     }
@@ -72,7 +47,7 @@ public class Place {
         return description;
     }
 
-    public Place setDescription(String description) {
+    public PlaceDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -81,7 +56,7 @@ public class Place {
         return imageUrl;
     }
 
-    public Place setImageUrl(String imageUrl) {
+    public PlaceDTO setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
@@ -90,7 +65,7 @@ public class Place {
         return type;
     }
 
-    public Place setType(PlaceType type) {
+    public PlaceDTO setType(PlaceType type) {
         this.type = type;
         return this;
     }
@@ -99,8 +74,8 @@ public class Place {
         return categories;
     }
 
-    public Place setCategories(Set<Category> category) {
-        this.categories = category;
+    public PlaceDTO setCategories(Set<Category> categories) {
+        this.categories = categories;
         return this;
     }
 
@@ -108,7 +83,7 @@ public class Place {
         return location;
     }
 
-    public Place setLocation(Location location) {
+    public PlaceDTO setLocation(Location location) {
         this.location = location;
         return this;
     }

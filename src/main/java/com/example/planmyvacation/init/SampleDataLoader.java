@@ -181,10 +181,10 @@ public class SampleDataLoader implements CommandLineRunner {
                 .mapToObj(i -> new Place()
                         .setLocation(barcelona)
                         .setType(PlaceType.VISIT)
-                        .setCategory(Set.of(cat_visit.get(getRandom(0, cat_visit.size() - 1))))
+                        .setCategories(Set.of(cat_visit.get(getRandom(0, cat_visit.size() - 1))))
                         .setRating(getRandom(1.0, 5.0))
                         .setName(faker.location().building())
-                        .setDescription(String.join(" ", faker.lorem().sentences(3)))
+                        .setDescription(String.join(" ", faker.lorem().sentences(5)))
                         .setImageUrl("")  /*TODO: add some images here*/
                 )
                 .toList();
@@ -195,7 +195,7 @@ public class SampleDataLoader implements CommandLineRunner {
                 .mapToObj(i -> new Place()
                         .setLocation(barcelona)
                         .setType(PlaceType.EAT)
-                        .setCategory(Set.of(cat_eat.get(getRandom(0, cat_eat.size() - 1))))
+                        .setCategories(Set.of(cat_eat.get(getRandom(0, cat_eat.size() - 1))))
                         .setRating(getRandom(1.0, 5.0))
                         .setName(faker.location().building())
                         .setDescription(String.join(" ", faker.lorem().sentences(3)))
@@ -255,6 +255,7 @@ public class SampleDataLoader implements CommandLineRunner {
             for (int i = 0; i < 3; i++) {
 
                 Activity activity = new Activity()
+                        .setPlan(plan)
                         .setItinerary(itinerary)
                         .setOrder(i + 1)
                         .setPlace(places.get(getRandom(0, places.size() - 1)));
@@ -265,6 +266,18 @@ public class SampleDataLoader implements CommandLineRunner {
             itinerary.setActivities(currentActivities);
             allActivities.addAll(currentActivities);
         }
+
+//        MyPlaces
+        List<Place> myPlaces = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+
+            Place randomPlace = places.get(getRandom(0, places.size() - 1));
+            myPlaces.add(randomPlace);
+        }
+
+        plan.setMyPlaces(myPlaces);
+
+
 
         planRepository.save(plan);
         itineraryRepository.saveAll(itineraries);
