@@ -3,6 +3,7 @@ package com.example.planmyvacation.service.impl;
 import com.example.planmyvacation.model.dto.CityDTO;
 import com.example.planmyvacation.model.dto.PlaceDTO;
 import com.example.planmyvacation.model.entity.City;
+import com.example.planmyvacation.model.entity.Location;
 import com.example.planmyvacation.model.entity.Place;
 import com.example.planmyvacation.repository.PlaceRepository;
 import com.example.planmyvacation.service.CityService;
@@ -25,6 +26,15 @@ public class PlaceServiceImpl implements PlaceService {
     public List<PlaceDTO> getAll() {
 
         return placeRepository.findAll()
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
+
+    @Override
+    public List<PlaceDTO> findAllByLocation(Long id) {
+
+        return placeRepository.findAllByLocationId(id)
                 .stream()
                 .map(this::mapToDTO)
                 .toList();

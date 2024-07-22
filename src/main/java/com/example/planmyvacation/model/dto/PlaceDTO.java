@@ -4,7 +4,10 @@ import com.example.planmyvacation.model.entity.Category;
 import com.example.planmyvacation.model.entity.Location;
 import com.example.planmyvacation.model.enums.PlaceType;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PlaceDTO {
 
@@ -97,5 +100,12 @@ public class PlaceDTO {
     public PlaceDTO setLocation(Location location) {
         this.location = location;
         return this;
+    }
+
+    public String getCategoriesAsString() {
+
+        return categories.stream()
+                .map(category -> category.getCategory())
+                .collect(Collectors.joining(", "));
     }
 }

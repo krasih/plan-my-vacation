@@ -1,9 +1,11 @@
 package com.example.planmyvacation.web;
 
 import com.example.planmyvacation.model.dto.CityDTO;
+import com.example.planmyvacation.model.dto.PlaceDTO;
 import com.example.planmyvacation.model.dto.PlanCreateDTO;
 import com.example.planmyvacation.model.dto.PlanDetailsDTO;
 import com.example.planmyvacation.service.CountryService;
+import com.example.planmyvacation.service.PlaceService;
 import com.example.planmyvacation.service.PlanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +20,15 @@ public class PlanController {
 
     private final PlanService planService;
     private final CountryService countryService;
+    private final PlaceService placeService;
 
-    public PlanController(PlanService planService, CountryService countryService) {
+    public PlanController(
+            PlanService planService,
+            CountryService countryService,
+            PlaceService placeService) {
         this.planService = planService;
         this.countryService = countryService;
+        this.placeService = placeService;
     }
 
     @ModelAttribute("planCreateData")
@@ -61,8 +68,10 @@ public class PlanController {
     public String viewPlan(@PathVariable Long id, Model model) {
 
         PlanDetailsDTO plan = planService.getPlanById(id);
+        List<PlaceDTO> allPlaces = placeService.findAllByLocation(plan.getLocation().getId());
 
         model.addAttribute("planDetailsData", plan);
+        model.addAttribute("allPlacesData", allPlaces);
 
         return "plan";
     }
