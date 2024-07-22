@@ -54,6 +54,7 @@ public class ItineraryServiceImpl implements ItineraryService {
                 .toList();
 
         return new ItineraryDTO()
+                .setId(itinerary.getId())
                 .setDate(date)
                 .setDayNo(itinerary.getDayNo())
                 .setLastDay(itinerary.isLastDay())

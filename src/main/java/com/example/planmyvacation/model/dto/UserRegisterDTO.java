@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 
 public class UserRegisterDTO {
 
+    private long id;
+
     @NotNull
     @Size(min = 4, max = 20)
     private String username;
@@ -21,6 +23,15 @@ public class UserRegisterDTO {
     private String confirmPassword;
 
     public UserRegisterDTO() {}
+
+    public long getId() {
+        return id;
+    }
+
+    public UserRegisterDTO setId(long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getUsername() {
         return username;

@@ -58,13 +58,21 @@ public class PlanController {
     }
 
     @GetMapping("/{id}")
-    public String viewPlan(@PathVariable("id") Long id, Model model) {
+    public String viewPlan(@PathVariable Long id, Model model) {
 
         PlanDetailsDTO plan = planService.getPlanById(id);
 
         model.addAttribute("planDetailsData", plan);
 
         return "plan";
+    }
+
+    @DeleteMapping("/{planId}/places/{placeId}")
+    public String deletePlace(@PathVariable("planId") Long planId, @PathVariable("placeId") Long placeId) {
+
+        planService.deletePlace(placeId, planId);
+
+        return "redirect:/plans/" + planId;
     }
 
 

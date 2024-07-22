@@ -12,6 +12,8 @@ public interface PlaceService {
 
     public PlaceDTO getPlaceById(Long id);
 
+    public Place getPlace(Long id);
+
     public PlaceDTO mapToDTO(Place place);
 
 }

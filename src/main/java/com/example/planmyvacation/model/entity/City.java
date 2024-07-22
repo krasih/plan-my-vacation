@@ -14,6 +14,9 @@ public class City {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(name="image_url")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
@@ -41,6 +44,15 @@ public class City {
 
     public City setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public City setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
         return this;
     }
 

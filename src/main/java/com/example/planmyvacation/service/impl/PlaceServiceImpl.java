@@ -39,9 +39,17 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
+    public Place getPlace(Long id) {
+
+        return placeRepository.findById(id).get();
+    }
+
+
+    @Override
     public PlaceDTO mapToDTO(Place place) {
 
         return new PlaceDTO()
+                .setId(place.getId())
                 .setName(place.getName())
                 .setType(place.getType())
                 .setCategories(place.getCategories())

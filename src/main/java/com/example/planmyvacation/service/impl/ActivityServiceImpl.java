@@ -45,6 +45,7 @@ public class ActivityServiceImpl implements ActivityService {
         PlaceDTO placeDTO = placeService.mapToDTO(activity.getPlace());
 
         return new ActivityDTO()
+                .setId(activity.getId())
                 .setOrder(activity.getOrder())
                 .setPlace(placeDTO)
                 .setItinerary(activity.getItinerary())

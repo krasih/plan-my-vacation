@@ -58,6 +58,7 @@ public class CountryServiceImpl implements CountryService {
     private CountryDTO mapToDTO(Country country) {
 
         return new CountryDTO()
+                .setId(country.getId())
                 .setName(country.getName())
                 .setCities(country.getCities());
     }

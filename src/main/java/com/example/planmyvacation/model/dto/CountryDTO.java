@@ -6,11 +6,22 @@ import java.util.List;
 
 public class CountryDTO {
 
+    private long id;
+
     private String name;
 
     private List<City> cities;
 
     public CountryDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public CountryDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {

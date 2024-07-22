@@ -8,6 +8,8 @@ import java.util.List;
 
 public class ItineraryDTO {
 
+    private long id;
+
     private LocalDate date;
 
     private int dayNo;
@@ -19,6 +21,15 @@ public class ItineraryDTO {
     private Plan plan;
 
     public ItineraryDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public ItineraryDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public LocalDate getDate() {

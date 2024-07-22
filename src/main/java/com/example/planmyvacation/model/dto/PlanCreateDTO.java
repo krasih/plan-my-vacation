@@ -10,6 +10,8 @@ import java.time.LocalDate;
 
 public class PlanCreateDTO {
 
+    private long id;
+
     private String cityName;
 
     private LocalDate startDate;
@@ -17,6 +19,15 @@ public class PlanCreateDTO {
     private LocalDate endDate;
 
     public PlanCreateDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public PlanCreateDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public String getCityName() {

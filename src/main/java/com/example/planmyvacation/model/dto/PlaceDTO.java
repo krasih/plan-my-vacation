@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class PlaceDTO {
 
+    private long id;
+
     private double rating;
 
     private String name;
@@ -23,6 +25,15 @@ public class PlaceDTO {
     private Location location;
 
     public PlaceDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public PlaceDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public double getRating() {

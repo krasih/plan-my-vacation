@@ -13,6 +13,8 @@ import java.util.List;
 
 public class PlanDetailsDTO {
 
+    private long id;
+
     private Location location;
 
     private LocalDate startDate;
@@ -28,6 +30,15 @@ public class PlanDetailsDTO {
     private boolean active;
 
     public PlanDetailsDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public PlanDetailsDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public Location getLocation() {

@@ -1,10 +1,7 @@
 package com.example.planmyvacation.service.impl;
 
 import com.example.planmyvacation.model.dto.*;
-import com.example.planmyvacation.model.entity.Itinerary;
-import com.example.planmyvacation.model.entity.Location;
-import com.example.planmyvacation.model.entity.Plan;
-import com.example.planmyvacation.model.entity.User;
+import com.example.planmyvacation.model.entity.*;
 import com.example.planmyvacation.repository.LocationRepository;
 import com.example.planmyvacation.repository.PlanRepository;
 import com.example.planmyvacation.repository.UserRepository;
@@ -14,12 +11,14 @@ import com.example.planmyvacation.service.PlaceService;
 import com.example.planmyvacation.service.PlanService;
 import com.example.planmyvacation.util.Utils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -59,7 +58,6 @@ public class PlanServiceImpl implements PlanService {
         return null;
     }
 
-//    TODO: Finish the implementation of the following method
     @Override
     public PlanDetailsDTO getPlanById(long id) {
 
@@ -69,7 +67,7 @@ public class PlanServiceImpl implements PlanService {
                 .orElse(null);
     }
 
-//    TODO: If need to use this method rises in more classes, consider adding it in some Utils class maybe...
+    //    TODO: If need to use this method rises in more classes, consider adding it in some Utils class maybe...
     private User getCurrentUser() {
 
         // TODO: Fill the USER once the Spring Security is implemented
@@ -115,6 +113,20 @@ public class PlanServiceImpl implements PlanService {
         return plan;
     }
 
+    @Transactional
+    @Override
+    public void deletePlace(Long placeId, Long planId) {
+
+
+        Plan plan = planRepository.findById(planId).get();
+        Place place = placeService.getPlace(placeId);
+        plan.getMyPlaces().remove(place);
+
+        planRepository.deletePlace(placeId, planId);
+
+        System.out.println("Success?");
+    }
+
     private PlanDetailsDTO mapToDTO(Plan plan) {
 
         LocalDate startDate = Utils.getLocalDate(plan.getStartDate());
@@ -132,6 +144,7 @@ public class PlanServiceImpl implements PlanService {
                 .toList();
 
         return new PlanDetailsDTO()
+                .setId(plan.getId())
                 .setLocation(plan.getLocation())
                 .setStartDate(startDate)
                 .setEndDate(endDate)

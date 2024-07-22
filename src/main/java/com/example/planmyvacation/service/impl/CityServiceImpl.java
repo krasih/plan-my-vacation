@@ -30,7 +30,9 @@ public class CityServiceImpl implements CityService {
     private CityDTO mapToDTO(City city) {
 
         return new CityDTO()
+                .setId(city.getId())
                 .setName(city.getName())
+                .setImageUrl(city.getImageUrl())
                 .setCountry(city.getCountry().getName());
     }
 }

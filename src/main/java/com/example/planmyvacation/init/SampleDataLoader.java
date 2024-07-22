@@ -129,12 +129,26 @@ public class SampleDataLoader implements CommandLineRunner {
 
         if (cityRepository.count() == 0 || locationRepository.count() > 0) return;
 
+
+        Map<String, String> cityCoordinates = Map.of(
+                "Chianti", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92662.07504340635!2d11.108868854192842!3d43.46707197143615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a3408bba0aa8d%3A0x4082c90e3e5a540!2s53011%20Castellina%20in%20Chianti%2C%20Province%20of%20Siena%2C%20Italy!5e0!3m2!1sen!2sbg!4v1721640663761!5m2!1sen!2sbg",
+                "Florence", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d65188.261438256275!2d11.215423315123862!3d43.77407613201832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a56a680d2d6ad%3A0x93d57917efc72a03!2sFlorence%2C%20Metropolitan%20City%20of%20Florence%2C%20Italy!5e0!3m2!1sen!2sbg!4v1721640524977!5m2!1sen!2sbg",
+                "Rome", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d159903.9263046514!2d12.382554776044776!3d41.866341630890346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13258a111bd74ac3%3A0x3094f9ab2388100!2sMetropolitan%20City%20of%20Rome%20Capital%2C%20Italy!5e0!3m2!1sen!2sbg!4v1721640443280!5m2!1sen!2sbg",
+                "Barcelona", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95780.47787015322!2d2.057788801385641!3d41.39276734229955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49816718e30e5%3A0x44b0fb3d4f47660a!2sBarcelona%2C%20Spain!5e0!3m2!1sen!2sbg!4v1719850383198!5m2!1sen!2sbg",
+                "Canary Islands", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1272433.594401552!2d-16.74998303037581!3d28.24877241615477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc41aa86ef755363%3A0x10340f3be4bc8c0!2sCanary%20Islands%2C%20Spain!5e0!3m2!1sen!2sbg!4v1721640360895!5m2!1sen!2sbg",
+                "Seville", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50726.511922697464!2d-5.9990043101641!3d37.38020618634614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c1114be6291%3A0x34f018621cfe5648!2sSeville%2C%20Spain!5e0!3m2!1sen!2sbg!4v1721640304913!5m2!1sen!2sbg",
+                "Cardiff", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d79522.71780565252!2d-3.228741665910496!3d51.47495532414542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486e02d434ec53f5%3A0x143406db6586670e!2sCardiff%2C%20UK!5e0!3m2!1sen!2sbg!4v1721640147914!5m2!1sen!2sbg",
+                "Edinburgh", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d71487.10339036374!2d-3.295989701381428!3d55.94985754599834!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4887b800a5982623%3A0x64f2147b7ce71727!2sEdinburgh%2C%20UK!5e0!3m2!1sen!2sbg!4v1721640067463!5m2!1sen!2sbg",
+                "London", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d94496.30293818022!2d-0.18075991855563694!3d51.51000397057365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sbg!4v1721639960186!5m2!1sen!2sbg"
+        );
+
         List<City> allCities = cityRepository.findAll();
 
         List<Location> locations = allCities.stream()
                 .map(city -> new Location()
                         .setCountry(city.getCountry())
                         .setCity(city)
+                        .setGpxCoordinates(cityCoordinates.get(city.getName()))
                 )
                 .toList();
 
@@ -210,9 +224,9 @@ public class SampleDataLoader implements CommandLineRunner {
 
         if (planRepository.count() > 0) return;
 
-        loadPlan("2023-10-20", "2023-10-27" , "Barcelona", "user");
-        loadPlan("2024-10-20", "2024-10-27" , "Barcelona", "user");
-        loadPlan("2025-10-20", "2025-10-27" , "Barcelona", "user");
+        loadPlan("2023-10-11", "2023-10-17" , "Chianti", "user");
+        loadPlan("2024-11-20", "2024-11-24" , "Barcelona", "user");
+        loadPlan("2025-12-25", "2025-12-31" , "London", "user");
     }
 
     private void loadPlan(String fromDate, String toDate, String city, String username) {
@@ -289,9 +303,9 @@ public class SampleDataLoader implements CommandLineRunner {
 
     private void initSampleData() {
 
-        cities_it.forEach(city -> city.setCountry(countries.get(0)));
-        cities_es.forEach(city -> city.setCountry(countries.get(1)));
-        cities_uk.forEach(city -> city.setCountry(countries.get(2)));
+        cities_it.forEach(city -> city.setCountry(countries.get(0)).setImageUrl("/images/chianti.jpg"));
+        cities_es.forEach(city -> city.setCountry(countries.get(1)).setImageUrl("/images/barcelona.jpg"));
+        cities_uk.forEach(city -> city.setCountry(countries.get(2)).setImageUrl("/images/london.jpeg"));
 
         countries.get(0).setCities(cities_it);
         countries.get(1).setCities(cities_es);

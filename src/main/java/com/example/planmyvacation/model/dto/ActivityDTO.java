@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class ActivityDTO {
 
+    private long id;
+
     private int order;
 
     private PlaceDTO place;
@@ -17,6 +19,15 @@ public class ActivityDTO {
     private Plan plan;
 
     public ActivityDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public ActivityDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public int getOrder() {

@@ -15,7 +15,7 @@ public interface PlanService {
 
     PlanDetailsDTO getPlanById(long id);
 
-
+    void deletePlace(Long placeId, Long planId);
 
 
 //    TODO: Implement the following methods
