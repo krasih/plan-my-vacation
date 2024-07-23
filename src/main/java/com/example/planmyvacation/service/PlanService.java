@@ -17,6 +17,8 @@ public interface PlanService {
 
     void deletePlace(Long placeId, Long planId);
 
+    void addPlace(Long placeId, Long planId);
+
 
 //    TODO: Implement the following methods
 //    void deletePlan(long planId);

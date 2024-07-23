@@ -18,21 +18,36 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+//    WEB
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // WebJARs
+    implementation 'org.webjars:webjars-locator:0.52'                     // For a version-agnostic webjars dependencies
+    implementation 'org.webjars:bootstrap:5.3.3'
+    implementation 'org.webjars.npm:bootstrap-icons:1.11.3'
+    implementation 'org.webjars.npm:htmx.org:2.0.1'
 
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    // TODO: SECURITY - replace the line below with the 2 dependencies above
-//    implementation 'org.springframework.security:spring-security-crypto'
-
+//    DB (Spring Data related)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
-    implementation 'net.datafaker:datafaker:2.3.1'
+
+//    SECURITY (Spring Security related)
+    // TODO: SECURITY - replace the 3rd-line below with the 2 dependencies above
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+//    implementation 'org.springframework.security:spring-security-crypto'
+
+
+//    MISC
+    implementation 'net.datafaker:datafaker:2.3.1'                  // Generate fake data - great for demos and testing!
     implementation 'org.modelmapper:modelmapper:3.2.0'
 
+
+//    TESTING
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

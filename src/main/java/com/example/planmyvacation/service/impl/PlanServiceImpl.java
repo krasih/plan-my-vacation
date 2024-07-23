@@ -117,14 +117,22 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public void deletePlace(Long placeId, Long planId) {
 
-
         Plan plan = planRepository.findById(planId).get();
         Place place = placeService.getPlace(placeId);
         plan.getMyPlaces().remove(place);
 
         planRepository.deletePlace(placeId, planId);
+    }
 
-        System.out.println("Success?");
+    @Transactional
+    @Override
+    public void addPlace(Long placeId, Long planId) {
+
+//        Plan plan = planRepository.findById(planId).get();
+//        Place place = placeService.getPlace(placeId);
+//        plan.getMyPlaces().add(place);
+
+        planRepository.addPlace(placeId, planId);
     }
 
     private PlanDetailsDTO mapToDTO(Plan plan) {
