@@ -4,15 +4,13 @@
     <title>Plan - Plan My Vacation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" href="/css/mystyle.css">-->
 
     <!-- Bootstrap CSS -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <!-- Bootstrap JS -->
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
     <!-- Bootstrap Icons -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <!-- Bootstrap JS -->
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
     <!-- HTMX -->
     <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
 
@@ -27,6 +25,12 @@
 <body class="p-0">
 
 
+
+<!-- MODAL: TOP-PLACES -->
+<div th:replace="~{fragments/modals::top-places(allPlaces=${allPlacesData}, city = ${planDetailsData.location.city.name}, planId = ${planDetailsData.id})}"></div>
+
+
+
 <div class="d-flex align-items-start flex-column text-bg-light" style="height: 100vh;">
 
     <!-- NAVIGATION -->
@@ -39,21 +43,24 @@
         <!-- SIDEBAR -->
         <div class="col-6 overflow-auto" style="max-height: 100%">
 
-            <!--SIDEBAR HEAD-->
+            <!-- SIDEBAR HEAD -->
             <div class="position-relative bg-light" style="width: 100%; height: 35vh;">
 
-                <!--PICTURE-->
+                <!-- MAIN PICTURE -->
                 <div class="position-relative" style="width: 100%; height: 30vh; overflow: hidden;">
-                    <img th:src="*{location.city.imageUrl}" alt="Barcelona" class="img-fluid w-100">
+                    <img th:src="*{location.city.imageUrl}" alt="city-image" class="img-fluid w-100">
                 </div>
 
-                <!--PLAN NAME-->
+                <!-- PLAN HEADING -->
                 <div class="position-absolute top-100 start-50 translate-middle shadow bg-white rounded" style="width: 60%; height: 5.5em; margin-top:-7%">
+
+                    <!-- CITY -->
                     <div class="d-flex justify-content-center flex-nowrap pt-2 text-dark">
                         <h2>Trip to <span th:text="*{location.getCity().name}">City</span></h2>
                     </div>
+
+                    <!-- DATES -->
                     <div class="d-flex justify-content-center flex-nowrap text-dark">
-<!--                        <span th:text="|*{startDate} - *{endDate}|">start date</span>-->
                         <small th:text="*{getDates()}">1/9/84 - 1/9/84</small>
                     </div>
                 </div>
@@ -63,7 +70,7 @@
             <!-- SIDEBAR CONTENT -->
             <div class="mx-5">
 
-                <!-- EXPLORE -->
+                <!-- SECTION: EXPLORE -->
                 <div>
                     <p class="d-inline-flex gap-1">
                     <div class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
@@ -91,47 +98,41 @@
                     </div>
                 </div>
 
-                <!-- MY PLACES -->
+                <!-- SECTION: MY PLACES -->
                 <div class="mt-2">
                     <hr class="border border-secondary-subtle border-5">
                     <div class="mt-3">
-
                         <div class="row g-2">
-                            <div class="col-10"><h6 class="display-6" style="font-size: 1.75rem;">My Places</h6></div>
+
+                            <!-- MY PLACES TITLE -->
+                            <div id="my-places" class="col-10"><h6 class="display-6" style="font-size: 1.75rem;">My Places</h6></div>
+
+                            <!-- BUTTON: ADD PLACE [opens modal: top-places] -->
                             <div class="col-2 mx-0 px-0">
                                 <div class="d-flex justify-content-center text-center">
-<!--                                    <a href="/plans/{id}/places" id="add_place_btn" class="btn btn-outline-primary opacity-50 rounded-circle">+</a>-->
-                                    <button type="button" class="btn btn-outline-primary opacity-50 rounded-circle"
-                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <button type="button"
+                                            class="btn btn-outline-primary opacity-50 rounded-circle"
+                                            data-bs-toggle="modal" data-bs-target="#modal-top-places">
                                         +
                                     </button>
                                 </div>
                             </div>
+
                         </div>
-
-<!--                        <h6 class="display-6" style="font-size: 1.75rem;">My Places</h6>-->
-
-                        <!-- BUTTON: ADD PLACE -->
-                        <!-- TODO: finish the button implementation below. Should open a MODAL to select from list of places for the given Location-->
-<!--                        <a href="/plans/{id}/places" id="add_place_btn" class="btn btn-outline-primary opacity-50 rounded-circle">+</a>-->
-
                         <div class="mt-4">
 
-                            <!-- PLACES LIST -->
-                            <ul th:each="myPlace: *{myPlaces}" class="list-group list-group-flush border-bottom scrollbar">
-                                <!--                                <li th:replace="~{fragments/sidebar::place(${myPlace})}"></li>-->
-                                <li th:replace="~{fragments/sidebar::place(place = ${myPlace}, planId = ${planDetailsData.id})}"></li>
-                            </ul>
+                            <!-- MY PLACES LIST -->
+                            <ul th:replace="~{fragments/sidebar::places(myPlaces = *{myPlaces}, planId = ${planDetailsData.id})}"></ul>
 
                         </div>
                     </div>
                 </div>
 
-                <!-- Itinerary -->
+                <!-- SECTION: ITINERARY -->
                 <div class="mt-4">
                     <hr class="border border-secondary-subtle border-5">
                     <div class="mt-3">
-                        <h6 class="display-6" style="font-size: 1.75rem;">Itinerary</h6>
+                        <h6 id="itinerary" class="display-6" style="font-size: 1.75rem;">Itinerary</h6>
                         <div class="mt-4 bg-warning">
 
 
@@ -178,19 +179,10 @@
 
         <!-- MAP -->
         <div class="col-6">
-<!--            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95780.47787015322!2d2.057788801385641!3d41.39276734229955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49816718e30e5%3A0x44b0fb3d4f47660a!2sBarcelona%2C%20Spain!5e0!3m2!1sen!2sbg!4v1719850383198!5m2!1sen!2sbg" width=100% height=100% style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>-->
-            <iframe th:src="*{location.gpxCoordinates}"
-                    width=100% height=100% style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe th:src="*{location.gpxCoordinates}" width=100% height=100% style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-    </div>
 
-    <!-- MODAL TEST -->
-    <div th:replace="~{fragments/modals::top-places(
-                                                allPlaces=${allPlacesData},
-                                                city = ${planDetailsData.location.city.name},
-                                                planId = ${planDetailsData.id})}">
     </div>
-
 
 
     <!-- FOOTER -->
@@ -198,8 +190,5 @@
 
 </div>
 
-
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>-->
-<!--<script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>-->
 </body>
 </html>

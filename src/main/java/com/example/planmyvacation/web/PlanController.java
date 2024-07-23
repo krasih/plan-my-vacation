@@ -89,7 +89,7 @@ public class PlanController {
 
         planService.deletePlace(placeId, planId);
 
-        return "redirect:/plans/" + planId;
+        return "fragments/sidebar :: empty_place";
     }
 
 

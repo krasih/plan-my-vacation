@@ -25,93 +25,84 @@
 
 
 
+<!-- FRAGMENT: EMPTY PLACE -->
+<div th:fragment="empty_place"></div>
+
+
+
 <!-- FRAGMENT: PLACE -->
-<li th:fragment="place(place, planId)" class="list-group-item list-group-item-action py-3 lh-tight">
+<ul th:fragment="places(myPlaces, planId)"
+    th:each="place: *{myPlaces}"
+    class="list-group list-group-flush border-bottom scrollbar">
 
-    <div class="d-flex w-100 align-items-center justify-content-between">
-        <div class="d-flex flex-column col-10">
-            <div class="row gy-2">
+    <li id="place_item" class="list-group-item list-group-item-action py-3 lh-tight">
+        <div class="d-flex w-100 align-items-center justify-content-between">
 
-                <!-- PLACE ORDER -->
-<!--                <span id="order" class="col-auto position-absolute top-3 start-0 translate-middle badge rounded-pill bg-info" style="&#45;&#45;bs-bg-opacity: .25;">-->
-<!--                    <strong th:text="${activity.order}" class="text-primary align-self-center">1</strong>-->
-<!--                </span>-->
+            <div class="d-flex flex-column col-10">
+                <div class="row gy-2">
 
-                <!-- ITEM HEADER -->
-                <div class="row gx-5">
-                    <!-- PLACE TITLE -->
-                    <strong th:text="${place.name}" class="col-auto mb-1">
-                        Place Name
-                    </strong>
+                    <!-- ITEM HEADER -->
+                    <div class="row gx-5">
+                        <!-- PLACE TITLE -->
+                        <strong th:text="${place.name}" class="col-auto mb-1">
+                            Place Name
+                        </strong>
 
-                    <!-- PLACE RATING -->
-                    <span th:text="${place.rating}" class="col-auto badge rounded-pill text-bg-warning align-self-center">
-                        Place Rating
-                    </span>
-                </div>
-
-                <!-- PLACE DESCRIPTION -->
-                <p th:text="${place.description}" class="mb-1 small">
-                    Place Description
-                </p>
-
-                <!-- BUTTONS -->
-                <div class="row g-2">
-
-                    <!-- BUTTON: DELETE PLACE -->
-                    <div class="col-auto">
-                        <form th:method="DELETE"
-                              th:action="@{/plans/{planId}/places/{placeId}(planId = ${planId}, placeId = ${place.id})}">
-                            <input class="btn btn-primary btn-sm" type="submit" value="Delete"/>
-                        </form>
+                        <!-- PLACE RATING -->
+                        <span th:text="${place.rating}" class="col-auto badge rounded-pill text-bg-warning align-self-center">
+                            Place Rating
+                        </span>
                     </div>
 
-                    <!-- BUTTON: MOVE_TO PLACE -->
-                    <div class="col-auto">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Move to
+                    <!-- PLACE DESCRIPTION -->
+                    <p th:text="${place.description}" class="mb-1 small">
+                        Place Description
+                    </p>
+
+                    <!-- BUTTONS -->
+                    <div class="row g-2">
+
+                        <!-- BUTTON: DELETE PLACE -->
+                        <div class="col-auto">
+                            <button th:hx-delete="'/plans/' + ${planId} + '/places/' + ${place.id}"
+                                    hx-target="#place_item"
+                                    hx-swap="outerHTML"
+                                    hx-trigger="click"
+                                    class="btn btn-primary btn-sm">
+                                Delete
                             </button>
-                            <!-- TODO: Implement Thymeleaf to control the list items -->
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">My Places</a></li>
-                                <li><a class="dropdown-item" href="#">Day 1</a></li>
-                                <li><a class="dropdown-item" href="#">Day 2</a></li>
-                                <li><a class="dropdown-item" href="#">Day 3</a></li>
-                            </ul>
                         </div>
+
+                        <!-- BUTTON: MOVE_TO PLACE -->
+                        <div class="col-auto">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Move to
+                                </button>
+                                <!-- TODO: Implement Thymeleaf to control the list items -->
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">My Places</a></li>
+                                    <li><a class="dropdown-item" href="#">Day 1</a></li>
+                                    <li><a class="dropdown-item" href="#">Day 2</a></li>
+                                    <li><a class="dropdown-item" href="#">Day 3</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
-
-
-
-                <div class="d-grid gap-2 d-md-block">
-                    <!-- BUTTON: DELETE -->
-<!--                    <a class="btn btn-primary btn-sm"-->
-<!--                       th:href="@{/plans/{planId}/places/{placeId}(planId = ${planId}, placeId = ${place.id})}"-->
-<!--                       onclick="return confirm('Are you sure?')">Delete</a>-->
-
-<!--                    <a class="delete btn btn-primary btn-sm"-->
-<!--                       th:href="@{/plans/{planId}/places/{placeId}(planId = ${planId}, placeId = ${place.id})}"-->
-<!--                       >Delete</a>-->
-
-
-
-                    <!-- BUTTON: MOVE TO -->
-
-                </div>
-
             </div>
-        </div>
 
-        <!-- PLACE IMAGE -->
-        <div style="height: 100px; overflow: hidden;">
-            <img th:src="@{/images/places_to_visit_barcelona.jpg}" class="h-100 img-thumbnail" alt="place-image">
-        </div>
-    </div>
+            <!-- PLACE IMAGE -->
+            <div style="height: 100px; overflow: hidden;">
+                <img th:src="@{/images/places_to_visit_barcelona.jpg}" class="h-100 img-thumbnail" alt="place-image">
+            </div>
 
-</li>
+        </div>
+    </li>
+</ul>
+
 
 
 
