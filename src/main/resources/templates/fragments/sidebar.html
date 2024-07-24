@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Plan My Vacation</title>
+    <title>Sidebar</title>
     <meta charset="utf-8">
+
+    <!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <!-- Bootstrap Icons -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <!-- Bootstrap JS -->
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+    <!-- HTMX -->
+    <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
+
 </head>
 
 <body>
@@ -13,7 +23,6 @@
     <div class="thumbnail">
         <a href="#" target="_blank">
             <div style="height: 20vh; overflow: hidden;">
-<!--                <img th:src="@{'images/' + ${image}}" class="img-fluid" alt="top-places">-->
                 <img th:src="@{/images/{img}(img=${image})}" class="img-fluid" alt="top-places">
             </div>
             <div class="caption d-flex justify-content-center text-center">
@@ -31,7 +40,7 @@
 
 
 <!-- FRAGMENT: PLACE -->
-<ul th:fragment="places(myPlaces, planId)"
+<ul th:fragment="places(myPlaces, planId, itineraries)"
     th:each="place: *{myPlaces}"
     class="list-group list-group-flush border-bottom scrollbar">
 
@@ -79,12 +88,22 @@
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Move to
                                 </button>
+
                                 <!-- TODO: Implement Thymeleaf to control the list items -->
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">My Places</a></li>
-                                    <li><a class="dropdown-item" href="#">Day 1</a></li>
-                                    <li><a class="dropdown-item" href="#">Day 2</a></li>
-                                    <li><a class="dropdown-item" href="#">Day 3</a></li>
+                                    <li>
+                                        <button th:each="itinerary: ${itineraries}"
+                                                th:text="'Day ' + ${itinerary.dayNo} + ' (' + ${itinerary.getDateAsString()} + ')'"
+                                                th:hx-put="'/plans/' + ${planId} + '/places/' + ${place.id} + '/itineraries/' + ${itinerary.id}"
+                                                hx-target="#place_item"
+                                                hx-swap="outerHTML"
+                                                hx-trigger="click"
+
+                                                class="dropdown-item"
+                                                type="button">Day Number</button>
+
+
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -166,7 +185,6 @@
     </div>
 
 </li>
-
 
 
 </body>

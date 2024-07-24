@@ -79,6 +79,11 @@ public class Itinerary {
         return this;
     }
 
+//    public Itinerary addActivity(Activity activity) {
+//        this.activities.add(activity);
+//        return this;
+//    }
+
     public Plan getPlan() {
         return plan;
     }

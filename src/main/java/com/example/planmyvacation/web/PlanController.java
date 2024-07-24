@@ -58,10 +58,10 @@ public class PlanController {
             PlanCreateDTO planCreateData
     ) {
 
-        planService.createPlan(planCreateData);
+        Long planId = planService.createPlan(planCreateData);
 
         // TODO: Must redirect to the newly created plan and open it for editing
-        return "redirect:/plan";
+        return "redirect:/plans/" + planId;
     }
 
     @GetMapping("/{id}")
@@ -79,7 +79,7 @@ public class PlanController {
     @PostMapping("/{planId}/places/{placeId}")
     public String addToMyPlaces(@PathVariable("planId") Long planId, @PathVariable("placeId") Long placeId) {
 
-        planService.addPlace(placeId, planId);
+        planService.addMyPlace(placeId, planId);
 
         return "fragments/modals :: empty_card";
     }
@@ -87,9 +87,19 @@ public class PlanController {
     @DeleteMapping("/{planId}/places/{placeId}")
     public String deletePlace(@PathVariable("planId") Long planId, @PathVariable("placeId") Long placeId) {
 
-        planService.deletePlace(placeId, planId);
+        planService.deleteMyPlace(placeId, planId);
 
         return "fragments/sidebar :: empty_place";
+    }
+
+    @PutMapping("/{planId}/places/{placeId}/itineraries/{itineraryId}")
+    public String addToMyPlaces(@PathVariable("planId") Long planId, @PathVariable("placeId") Long placeId, @PathVariable("itineraryId") Long itineraryId) {
+
+        planService.addItineraryActivity(planId, itineraryId, placeId);
+        planService.deleteMyPlace(placeId, planId);
+        PlanDetailsDTO plan = planService.getPlanById(planId);
+
+        return "fragments/modals :: empty_card";
     }
 
 

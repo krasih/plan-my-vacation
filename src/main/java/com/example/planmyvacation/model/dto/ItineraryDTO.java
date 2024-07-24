@@ -1,9 +1,13 @@
 package com.example.planmyvacation.model.dto;
 
+import com.example.planmyvacation.model.entity.Activity;
 import com.example.planmyvacation.model.entity.Plan;
+import com.example.planmyvacation.util.Utils;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class ItineraryDTO {
@@ -75,5 +79,14 @@ public class ItineraryDTO {
     public ItineraryDTO setPlan(Plan plan) {
         this.plan = plan;
         return this;
+    }
+
+//    public Date getDateAsDate() {
+//        return java.sql.Date.valueOf(date);
+//    }
+
+    public String getDateAsString() {
+//        return Utils.formatDate(date, "E, dd/MM");
+        return Utils.formatDate(date, "E");
     }
 }

@@ -61,4 +61,5 @@ public class ItineraryServiceImpl implements ItineraryService {
                 .setActivities(activitiesDTO)
                 .setPlan(itinerary.getPlan());
     }
+
 }

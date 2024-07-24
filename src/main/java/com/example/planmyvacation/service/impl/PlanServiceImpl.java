@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -45,11 +44,13 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public void createPlan(PlanCreateDTO planDTO) {
+    public Long createPlan(PlanCreateDTO planDTO) {
 
         Plan plan = setPlan(planDTO);
 
-        planRepository.save(plan);
+        Plan saved = planRepository.save(plan);
+
+        return saved.getId();
     }
 
 //    TODO: Finish the implementation of the following method
@@ -115,24 +116,27 @@ public class PlanServiceImpl implements PlanService {
 
     @Transactional
     @Override
-    public void deletePlace(Long placeId, Long planId) {
+    public void deleteMyPlace(Long placeId, Long planId) {
 
         Plan plan = planRepository.findById(planId).get();
         Place place = placeService.getPlace(placeId);
         plan.getMyPlaces().remove(place);
 
-        planRepository.deletePlace(placeId, planId);
+        planRepository.deleteMyPlace(placeId, planId);
     }
 
     @Transactional
     @Override
-    public void addPlace(Long placeId, Long planId) {
+    public void addMyPlace(Long placeId, Long planId) {
 
-//        Plan plan = planRepository.findById(planId).get();
-//        Place place = placeService.getPlace(placeId);
-//        plan.getMyPlaces().add(place);
+        planRepository.addMyPlace(placeId, planId);
+    }
 
-        planRepository.addPlace(placeId, planId);
+    @Transactional
+    @Override
+    public void addItineraryActivity(Long planId, Long itineraryId, Long placeId) {
+
+        planRepository.addItineraryActivity(placeId, itineraryId, planId);
     }
 
     private PlanDetailsDTO mapToDTO(Plan plan) {
