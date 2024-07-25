@@ -13,7 +13,7 @@
 
         <!-- WEBSITE HOME -->
         <div class="me-5 p-2 d-flex align-items-center">
-            <a class="navbar-brand border p-2" th:href="@{/home}">Plan My Vacation</a>
+            <a th:href="@{/home}" class="navbar-brand border p-2">Plan My Vacation</a>
         </div>
 
         <!-- MENUS -->
@@ -22,7 +22,6 @@
 
                 <div class="d-flex align-items-center">
                     <a th:href="@{/plans/create}"
-
                        th:hidden="${hideStartPlanning}"
                        class="btn btn-dark me-1 py-0 ">Start planning</a>
                 </div>
@@ -52,13 +51,21 @@
     <p class="col-md-4 mb-0 ps-4 text-light">&copy; 2024 Krasimir Hristov</p>
 
     <ul class="nav col-md-4 pe-4 justify-content-end ">
-        <li class="nav-item"><a href="#" class="btn btn-dark mx-1">Home</a></li>
+        <li class="nav-item">
+            <a th:href="@{/home}" class="btn btn-dark mx-1">Home</a>
+        </li>
         <div class="vr bg-light"></div>
-        <li class="nav-item"><a href="#" class="btn btn-dark mx-1">Contacts</a></li>
+        <li class="nav-item">
+            <a th:href="@{/contacts}" class="btn btn-dark mx-1">Contacts</a>
+        </li>
         <div class="vr bg-light"></div>
-        <li class="nav-item"><a href="#" class="btn btn-dark mx-1">Careers</a></li>
+        <li class="nav-item">
+            <a th:href="@{/jobs}" class="btn btn-dark mx-1">Careers</a>
+        </li>
         <div class="vr bg-light"></div>
-        <li class="nav-item"><a href="#" class="btn btn-dark mx-1">About</a></li>
+        <li class="nav-item">
+            <a th:href="@{/about}" class="btn btn-dark mx-1">About</a>
+        </li>
     </ul>
 </footer>
 

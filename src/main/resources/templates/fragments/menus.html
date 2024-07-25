@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modals</title>
+
+  <!-- Bootstrap CSS -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <!-- Bootstrap Icons -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+  <!-- Bootstrap JS -->
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+  <!-- HTMX -->
+  <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
+
+</head>
+<body>
+
+
+
+  <!-- FRAGMENT: HOMEPAGE-MENU -->
+  <a th:fragment="homepage-menu(link, image, header, body)"
+     th:href="${link}"
+     class="card mx-1 border-1 border-start border-end link-underline-light">
+
+    <img th:src="'/images/' + ${image}" class="card-img-top" alt="..." width="100%" height="200" preserveAspectRatio="xMidYMid slice" focusable="false">
+    <div th:text="${header}" class="card-header mt-3 text-center display-6 border-0" style="font-size: 1.2rem; color: purple; font-weight: 400">
+      Title
+    </div>
+    <div class="card-body mb-4">
+      <p th:text="${body}" class="card-text fs-6 fw-light">
+        Description
+      </p>
+    </div>
+  </a>
+
+
+
+</body>
+</html>

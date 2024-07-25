@@ -6,46 +6,47 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping({"/", "/index"})
-    public String home() {
+//    TODO: Merge the getIndex and getHome methods into one
+    @GetMapping({"", "/", "/index"})
+    public String getIndex() {
 
         return "index";
     }
 
     @GetMapping("/home")
-    public String index() {
+    public String getHome() {
 
         return "home";
     }
 
-    @GetMapping("/plan")
-    public String plan() {
-
-        return "plan";
-    }
-
-    @GetMapping("/plans")
-    public String plans() {
-
-        return "plans";
-    }
-
     @GetMapping("/users")
-    public String users() {
+    public String getUsers() {
 
         return "users";
     }
 
+    @GetMapping("/statistics")
+    public String getStatistics() {
+
+        return "statistics";
+    }
+
+    @GetMapping("/contacts")
+    public String getContacts() {
+
+        return "contacts";
+    }
+
     @GetMapping("/jobs")
-    public String jobs() {
+    public String getJobs() {
 
         return "jobs";
     }
 
-    @GetMapping("/contacts")
-    public String contacts() {
+    @GetMapping("/about")
+    public String getAbout() {
 
-        return "contacts";
+        return "about";
     }
 
 }

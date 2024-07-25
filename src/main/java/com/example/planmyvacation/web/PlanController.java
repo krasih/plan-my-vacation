@@ -42,10 +42,13 @@ public class PlanController {
         return countryService.getAllAsMap();
     }
 
-//    @ModelAttribute("planDetailsData")
-//    public PlanCreateDTO createEmptyRegisterDTO() {
-//        return new PlanDetailsDTO();
-//    }
+
+
+    @GetMapping({"", "/"})
+    public String plans() {
+
+        return "plans";
+    }
 
     @GetMapping("/create")
     public String viewPlanCreate() {
@@ -101,7 +104,5 @@ public class PlanController {
 
         return "fragments/modals :: empty_card";
     }
-
-
 
 }
