@@ -1,9 +1,6 @@
 package com.example.planmyvacation.web;
 
-import com.example.planmyvacation.model.dto.CityDTO;
-import com.example.planmyvacation.model.dto.PlaceDTO;
-import com.example.planmyvacation.model.dto.PlanCreateDTO;
-import com.example.planmyvacation.model.dto.PlanDetailsDTO;
+import com.example.planmyvacation.model.dto.*;
 import com.example.planmyvacation.service.CountryService;
 import com.example.planmyvacation.service.PlaceService;
 import com.example.planmyvacation.service.PlanService;
@@ -44,8 +41,12 @@ public class PlanController {
 
 
 
-    @GetMapping({"", "/"})
-    public String plans() {
+    @GetMapping()
+    public String viewPlans(Model model) {
+
+        List<PlanSummaryDTO> plans = planService.getAll();
+
+        model.addAttribute("plansData", plans);
 
         return "plans";
     }

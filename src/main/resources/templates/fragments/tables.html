@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modals</title>
+
+  <!-- Bootstrap CSS -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <!-- Bootstrap Icons -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+  <!-- Bootstrap JS -->
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+  <!-- HTMX -->
+  <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
+
+</head>
+<body>
+
+
+
+  <!-- FRAGMENT: PLANS TABLE -->
+  <tbody th:fragment="plans(tableData)" >
+  <!--                <tr th:replace="~{fragments/common::navbar(hideStartPlanning='false')}"></tr>-->
+  <!--                <tr th:each="plan: ${plansData}" th:replace="~{plans::table-row(my = ${plan})}"></tr>-->
+    <tr th:each="plan: ${tableData}">
+      <td th:text="${plan.getLocation()}" class="text-start">City, Country</td>
+      <td th:text="${plan.getDates()}">1/9/84 - 1/9/84</td>
+      <td th:text="${plan.getUsername()}">Username</td>
+      <td th:text="${plan.isActive()}">Is active?</td>
+      <!--<td>
+          &lt;!&ndash;suppress HtmlFormInputWithoutLabel &ndash;&gt;
+          <input type="checkbox"/>
+      </td>-->
+      <td>
+
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+          <button class="btn btn-outline-primary btn-sm w-50"
+                  hx-confirm="Are you sure?"
+                  hx-target="closest tr"
+                  hx-swap="outerHTML swap:1s"
+                  hx-trigger="click"
+                  th:attr="hx-delete=@{#}">
+            Open
+          </button>
+          <button class="btn btn-outline-danger btn-sm w-50"
+                  hx-confirm="Are you sure?"
+                  hx-target="closest tr"
+                  hx-swap="outerHTML swap:1s"
+                  hx-trigger="click"
+                  th:attr="hx-delete=@{#}">
+            Delete
+          </button>
+        </div>
+
+<!--        <button class="btn btn-danger"-->
+<!--                hx-confirm="Are you sure?"-->
+<!--                hx-target="closest tr"-->
+<!--                hx-swap="outerHTML swap:1s"-->
+<!--                hx-trigger="click"-->
+<!--                th:attr="hx-delete=@{#}">-->
+<!--          Delete-->
+<!--        </button>-->
+
+      </td>
+    </tr>
+  </tbody>
+
+
+
+</body>
+</html>

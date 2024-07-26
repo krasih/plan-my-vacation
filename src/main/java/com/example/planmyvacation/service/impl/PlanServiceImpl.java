@@ -55,8 +55,11 @@ public class PlanServiceImpl implements PlanService {
 
 //    TODO: Finish the implementation of the following method
     @Override
-    public List<PlanDetailsDTO> getAll() {
-        return null;
+    public List<PlanSummaryDTO> getAll() {
+        return planRepository.findAll()
+                .stream()
+                .map(this::mapToSummaryDTO)
+                .toList();
     }
 
     @Override
@@ -64,7 +67,7 @@ public class PlanServiceImpl implements PlanService {
 
         return planRepository
                 .findById(id)
-                .map(this::mapToDTO)
+                .map(this::mapToDetailsDTO)
                 .orElse(null);
     }
 
@@ -139,12 +142,10 @@ public class PlanServiceImpl implements PlanService {
         planRepository.addItineraryActivity(placeId, itineraryId, planId);
     }
 
-    private PlanDetailsDTO mapToDTO(Plan plan) {
+    private PlanDetailsDTO mapToDetailsDTO(Plan plan) {
 
         LocalDate startDate = Utils.getLocalDate(plan.getStartDate());
         LocalDate endDate = Utils.getLocalDate(plan.getEndDate());
-
-//        List<ActivityDTO> myPlaces = activityService.mapAllToDTO(plan.getMyPlaces());
 
         List<PlaceDTO> myPlaces = plan.getMyPlaces().stream()
                 .map(placeService::mapToDTO)
@@ -162,6 +163,21 @@ public class PlanServiceImpl implements PlanService {
                 .setEndDate(endDate)
                 .setMyPlaces(myPlaces)
                 .setItineraries(itineraries)
+                .setUser(plan.getUser())
+                .setActive(plan.isActive());
+    }
+
+    private PlanSummaryDTO mapToSummaryDTO(Plan plan) {
+
+        LocalDate startDate = Utils.getLocalDate(plan.getStartDate());
+        LocalDate endDate = Utils.getLocalDate(plan.getEndDate());
+
+        return new PlanSummaryDTO()
+                .setId(plan.getId())
+                .setCity(plan.getLocation().getCity().getName())
+                .setCountry(plan.getLocation().getCountry().getName())
+                .setStartDate(startDate)
+                .setEndDate(endDate)
                 .setUser(plan.getUser())
                 .setActive(plan.isActive());
     }

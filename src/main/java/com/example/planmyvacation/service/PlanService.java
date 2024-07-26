@@ -2,6 +2,7 @@ package com.example.planmyvacation.service;
 
 import com.example.planmyvacation.model.dto.PlanCreateDTO;
 import com.example.planmyvacation.model.dto.PlanDetailsDTO;
+import com.example.planmyvacation.model.dto.PlanSummaryDTO;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface PlanService {
 
     Long createPlan(PlanCreateDTO planDTO);
 
-    public List<PlanDetailsDTO> getAll();
+    public List<PlanSummaryDTO> getAll();
 
     PlanDetailsDTO getPlanById(long id);
 
