@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-
+        System.out.println("\n\n\n\n\n-------- login --------\n\n\n\n\n");
         return "login";
     }
 

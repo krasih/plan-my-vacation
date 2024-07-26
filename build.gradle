@@ -36,8 +36,8 @@ dependencies {
 
 //    SECURITY (Spring Security related)
     // TODO: SECURITY - replace the 3rd-line below with the 2 dependencies above
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
 //    implementation 'org.springframework.security:spring-security-crypto'
 

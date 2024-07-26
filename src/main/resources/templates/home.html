@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Home | Plan My Vacation</title>
     <meta charset="utf-8">
@@ -93,7 +93,8 @@
                         )}"></a>
 
                     <!-- SECTION: EDIT LOCATION [ROLE: ADMIN] -->
-                    <a th:replace="~{fragments/menus::homepage-menu(
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:replace="~{fragments/menus::homepage-menu(
                         link = '/locations',
                         image = 'edit-location.jpg',
                         header = 'EDIT LOCATION',
@@ -101,15 +102,17 @@
                         )}"></a>
 
                     <!-- SECTION: ALL USERS [ROLE: ADMIN] -->
-                    <a th:replace="~{fragments/menus::homepage-menu(
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:replace="~{fragments/menus::homepage-menu(
                         link = '/users',
                         image = 'all-users.jpg',
                         header = 'ALL USERS',
                         body = 'TODO: Add description.'
                         )}"></a>
 
-                    <!-- SECTION: STATISTICS [ROLE: ALL] -->
-                    <a th:replace="~{fragments/menus::homepage-menu(
+                    <!-- SECTION: STATISTICS [ROLE: ADMIN] -->
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:replace="~{fragments/menus::homepage-menu(
                         link = '/statistics',
                         image = 'stats.jpg',
                         header = 'STATISTICS',

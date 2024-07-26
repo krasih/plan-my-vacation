@@ -1,5 +1,8 @@
 package com.example.planmyvacation.web;
 
+import com.example.planmyvacation.model.user.AppUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -8,15 +11,23 @@ public class HomeController {
 
 //    TODO: Merge the getIndex and getHome methods into one
     @GetMapping({"", "/", "/index"})
-    public String getIndex() {
+    public String getIndex(@AuthenticationPrincipal UserDetails userDetails) {
+
+        if (userDetails instanceof AppUserDetails appUserDetails) {
+            return "redirect:/home";
+        }
 
         return "index";
     }
 
     @GetMapping("/home")
-    public String getHome() {
+    public String getHome(@AuthenticationPrincipal UserDetails userDetails) {
 
-        return "home";
+        if (userDetails instanceof AppUserDetails appUserDetails) {
+            return "home";
+        }
+
+        return "redirect:/";
     }
 
     @GetMapping("/users")

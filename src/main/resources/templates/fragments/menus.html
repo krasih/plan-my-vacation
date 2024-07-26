@@ -22,7 +22,8 @@
   <!-- FRAGMENT: HOMEPAGE-MENU -->
   <a th:fragment="homepage-menu(link, image, header, body)"
      th:href="${link}"
-     class="card mx-1 border-1 border-start border-end link-underline-light">
+     class="card mx-1 border-1 border-start border-end link-underline-light"
+     style="max-width: 314px">
 
     <img th:src="'/images/' + ${image}" class="card-img-top" alt="..." width="100%" height="200" preserveAspectRatio="xMidYMid slice" focusable="false">
     <div th:text="${header}" class="card-header mt-3 text-center display-6 border-0" style="font-size: 1.2rem; color: purple; font-weight: 400">

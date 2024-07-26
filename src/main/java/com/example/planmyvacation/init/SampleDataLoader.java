@@ -6,6 +6,7 @@ import com.example.planmyvacation.model.enums.UserRole;
 import com.example.planmyvacation.repository.*;
 import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -33,6 +34,7 @@ public class SampleDataLoader implements CommandLineRunner {
     private final PlanRepository planRepository;
     private final ItineraryRepository itineraryRepository;
     private final ActivityRepository activityRepository;
+    private final PasswordEncoder passwordEncoder;
     private final Faker faker;
     private final Random random;
 
@@ -48,7 +50,7 @@ public class SampleDataLoader implements CommandLineRunner {
             PlanRepository planRepository,
             ItineraryRepository itineraryRepository,
             ActivityRepository activityRepository,
-            Faker faker
+            PasswordEncoder passwordEncoder, Faker faker
     ) {
         this.careerRepository = careerRepository;
         this.countryRepository = countryRepository;
@@ -61,6 +63,7 @@ public class SampleDataLoader implements CommandLineRunner {
         this.planRepository = planRepository;
         this.itineraryRepository = itineraryRepository;
         this.activityRepository = activityRepository;
+        this.passwordEncoder = passwordEncoder;
         this.faker = faker;
         this.random = new Random();
     }
@@ -107,7 +110,8 @@ public class SampleDataLoader implements CommandLineRunner {
         User admin = new User()
                 .setUsername("admin")
                 .setEmail("admin@email.com")
-                .setPassword("admin")
+//                .setPassword("admin")
+                .setPassword(passwordEncoder.encode("admin"))
                 .setRole(
                         new Role(UserRole.ADMIN)
                 );
@@ -117,7 +121,8 @@ public class SampleDataLoader implements CommandLineRunner {
         User user = new User()
                 .setUsername("user")
                 .setEmail("user@email.com")
-                .setPassword("user")
+//                .setPassword("user")
+                .setPassword(passwordEncoder.encode("user"))
                 .setRole(
                         new Role(UserRole.USER)
                 );

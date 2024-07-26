@@ -7,6 +7,7 @@ import com.example.planmyvacation.repository.RoleRepository;
 import com.example.planmyvacation.repository.UserRepository;
 import com.example.planmyvacation.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,17 +16,17 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final ModelMapper modelMapper;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
     public UserServiceImpl(
             ModelMapper modelMapper,
-//            PasswordEncoder passwordEncoder,
+            PasswordEncoder passwordEncoder,
             UserRepository userRepository,
             RoleRepository roleRepository) {
         this.modelMapper = modelMapper;
-//        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     private User mapDtoToEntity(UserRegisterDTO dto) {
         User user = modelMapper.map(dto, User.class);
         user.setRole(roleRepository.getByRole(UserRole.USER));
-//        user.setPassword(passwordEncoder.encode(dto.password()));
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         return user;
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Plan My Vacation</title>
     <meta charset="utf-8">
@@ -16,10 +16,11 @@
             <a th:href="@{/home}" class="navbar-brand border p-2">Plan My Vacation</a>
         </div>
 
-        <!-- MENUS -->
+        <!-- NAVBAR MENUS -->
         <div class="me-3 p-2 flex-fill align-self-center">
             <div class="d-flex justify-content-between">
 
+                <!-- MENU: START PLANNING -->
                 <div class="d-flex align-items-center">
                     <a th:href="@{/plans/create}"
                        th:hidden="${hideStartPlanning}"
@@ -27,16 +28,33 @@
                 </div>
 
                 <div class="row gx-0">
-                    <div class="col-auto">
-                        <a th:href="@{/users/register}" class="btn btn-dark me-1 py-0">Sign Up</a>
+
+                    <!-- MENU: LOGIN -->
+                    <div sec:authorize="!isAuthenticated()" class="col-auto">
+                        <a th:href="@{/users/login}" class="btn btn-dark me-1 py-0 fw-bold" type="button">Login</a>
                     </div>
-                    <div class="vr bg-light"></div>
-                    <div class="col-auto">
-                        <a th:href="@{/users/login}" class="btn btn-dark mx-1 py-0" type="button">Login</a>
+                    <div sec:authorize="!isAuthenticated()" class="vr bg-light"></div>
+
+                    <!-- MENU: SIGN UP / REGISTER -->
+                    <div sec:authorize="!isAuthenticated()" class="col-auto">
+                        <a th:href="@{/users/register}" class="btn btn-warning mx-1 py-0 fw-bold">Sign Up</a>
                     </div>
-                    <div class="col-auto">
-                        <a th:href="@{/logout}"  class="btn btn-dark mx-1 py-0" type="button">Logout</a>
+
+                    <!-- MENU: LOGOUT -->
+                    <!--<div sec:authorize="isAuthenticated()" class="col-auto">
+                        <form th:method="post"
+                              th:action="@{/users/logout}" class="btn btn-link mx-1 py-0">
+                            <input class="btn btn-dark mx-1 py-0 fw-bold" type="submit" value="Logout"/>
+                        </form>
+                    </div>-->
+
+                    <div sec:authorize="isAuthenticated()" class="col-auto">
+                        <form th:method="post"
+                              th:action="@{/users/logout}" class="btn btn-link mx-1 py-0">
+                            <input class="btn btn-dark mx-1 py-0 fw-bold" type="submit" value="Logout"/>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -68,7 +86,6 @@
         </li>
     </ul>
 </footer>
-
 
 
 </body>
