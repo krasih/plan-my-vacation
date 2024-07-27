@@ -15,6 +15,8 @@ import java.util.Map;
 @RequestMapping("/plans")
 public class PlanController {
 
+    private final static int DEFAULT_PAGE_SIZE = 15;
+
     private final PlanService planService;
     private final CountryService countryService;
     private final PlaceService placeService;
@@ -41,10 +43,14 @@ public class PlanController {
 
 
 
+    // TODO: Finish FILTER and SORT implementations in the method below
     @GetMapping()
-    public String viewPlans(Model model) {
+    public String getPlans(
+            @RequestParam(value="page", defaultValue = "0", required = false) int pageNo,
+            Model model
+    ) {
 
-        List<PlanSummaryDTO> plans = planService.getAll();
+        List<PlanSummaryDTO> plans = planService.getAll(pageNo, DEFAULT_PAGE_SIZE);
 
         model.addAttribute("plansData", plans);
 

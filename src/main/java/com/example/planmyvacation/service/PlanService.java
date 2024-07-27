@@ -10,7 +10,7 @@ public interface PlanService {
 
     Long createPlan(PlanCreateDTO planDTO);
 
-    public List<PlanSummaryDTO> getAll();
+    public List<PlanSummaryDTO> getAll(int pageNo, int pageSize);
 
     PlanDetailsDTO getPlanById(long id);
 

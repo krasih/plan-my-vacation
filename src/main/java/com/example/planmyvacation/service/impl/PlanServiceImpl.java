@@ -10,6 +10,9 @@ import com.example.planmyvacation.service.ItineraryService;
 import com.example.planmyvacation.service.PlaceService;
 import com.example.planmyvacation.service.PlanService;
 import com.example.planmyvacation.util.Utils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,11 +56,15 @@ public class PlanServiceImpl implements PlanService {
         return saved.getId();
     }
 
-//    TODO: Finish the implementation of the following method
     @Override
-    public List<PlanSummaryDTO> getAll() {
-        return planRepository.findAll()
-                .stream()
+    public List<PlanSummaryDTO> getAll(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<Plan> plans = planRepository.findAll(pageable);
+        List<Plan> listOfPlans = plans.getContent();
+
+        return listOfPlans.stream()
                 .map(this::mapToSummaryDTO)
                 .toList();
     }

@@ -25,39 +25,60 @@
     <div th:replace="~{fragments/common::navbar(hideStartPlanning='false')}"></div>
 
 
-    <div class="container ">
+    <div class="container h-100 d-flex align-items-end flex-column">
 
-        <!-- FILTER BUTTONS -->
+        <!-- FILTER BUTTONS: ACTIVE / INACTIVE / ALL -->
         <div class="col-3 mx-auto d-flex justify-content-center">
-        <div class="btn-group btn-group-sm py-2 w-100" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-            <label class="col-12 btn btn-outline-primary" for="btnradio1">Active</label>
+            <div class="btn-group btn-group-sm py-3 w-100" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="col-12 btn btn-outline-primary" for="btnradio1">Active</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="col-12 btn btn-outline-primary" for="btnradio2">Inactive</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="col-12 btn btn-outline-primary" for="btnradio2">Inactive</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-            <label class="col-12 btn btn-outline-primary" for="btnradio3">All</label>
-        </div>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="col-12 btn btn-outline-primary" for="btnradio3">All</label>
+            </div>
         </div>
 
         <!-- TABLE PLANS -->
         <table th:object="${plansData}" class="table table-sm table-hover align-middle text-center">
             <thead>
             <tr class="table-primary fs-5">
-                <th scope="col" class="col-2 py-3">
+                <th scope="col" class="col py-2">
                     Location </th>
-                <th scope="col" class="col py-3">
+                <th scope="col" class="col py-2">
                     Dates </th>
-                <th scope="col" class="col py-3">
+                <th scope="col" class="col py-2">
                     User </th>
-                <th scope="col" class="col-1 py-3">
+                <th scope="col" class="col-1 py-2">
                     Is active </th>
-                <th scope="col" class="col-2 py-3">
+                <th scope="col" class="col-2 py-2">
                     &nbsp; </th>
             </thead>
             <tbody th:replace="~{fragments/tables::plans(${plansData})}"></tbody>
         </table>
+
+        <!-- TABLE PAGINATION -->
+        <div class="mt-auto mx-auto">
+            <div class="col-3">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a th:href="@{/plans(page='0')}" class="page-link " aria-label="Previous" style="background: #f3eecb">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item fw-bold"><a th:href="@{/plans(page='1')}" class="page-link">1</a></li>
+                        <li class="page-item fw-bold"><a th:href="@{/plans(page='1')}" class="page-link">2</a></li>
+                        <li class="page-item fw-bold"><a th:href="@{/plans(page='1')}" class="page-link">3</a></li>
+                        <li class="page-item">
+                            <a th:href="@{/plans(page='4')}" class="page-link" aria-label="Next" style="background: #f3eecb">
+                                <span class="fw-bold" aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
     </div>
 
     <!--<div class="col-12 g-0 p-0 row flex-grow-1 bg-secondary d-flex justify-content-center">

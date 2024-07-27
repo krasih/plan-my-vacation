@@ -4,6 +4,7 @@ import com.example.planmyvacation.model.entity.*;
 import com.example.planmyvacation.model.enums.PlaceType;
 import com.example.planmyvacation.model.enums.UserRole;
 import com.example.planmyvacation.repository.*;
+import com.example.planmyvacation.util.Utils;
 import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -91,7 +92,7 @@ public class SampleDataLoader implements CommandLineRunner {
                         .setCategory(faker.job().field())
                         .setTitle(faker.job().title())
                         .setDescription(String.join(" ", faker.lorem().sentences(3)))
-                        .setPublished(getRandom(1, 15) + " days ago.")
+                        .setPublished(Utils.getRandom(1, 15) + " days ago.")
                 )
                 .toList();
 
@@ -200,8 +201,8 @@ public class SampleDataLoader implements CommandLineRunner {
                 .mapToObj(i -> new Place()
                         .setLocation(barcelona)
                         .setType(PlaceType.VISIT)
-                        .setCategories(Set.of(cat_visit.get(getRandom(0, cat_visit.size() - 1))))
-                        .setRating(getRandom(1.0, 5.0))
+                        .setCategories(Set.of(cat_visit.get(Utils.getRandom(0, cat_visit.size() - 1))))
+                        .setRating(Utils.getRandom(1.0, 5.0))
                         .setName(faker.location().building())
                         .setDescription(String.join(" ", faker.lorem().sentences(5)))
                         .setImageUrl("")  /*TODO: add some images here*/
@@ -214,8 +215,8 @@ public class SampleDataLoader implements CommandLineRunner {
                 .mapToObj(i -> new Place()
                         .setLocation(barcelona)
                         .setType(PlaceType.EAT)
-                        .setCategories(Set.of(cat_eat.get(getRandom(0, cat_eat.size() - 1))))
-                        .setRating(getRandom(1.0, 5.0))
+                        .setCategories(Set.of(cat_eat.get(Utils.getRandom(0, cat_eat.size() - 1))))
+                        .setRating(Utils.getRandom(1.0, 5.0))
                         .setName(faker.location().building())
                         .setDescription(String.join(" ", faker.lorem().sentences(3)))
                         .setImageUrl("")  /*TODO: add some images here*/
@@ -229,9 +230,30 @@ public class SampleDataLoader implements CommandLineRunner {
 
         if (planRepository.count() > 0) return;
 
-        loadPlan("2023-10-11", "2023-10-17" , "Chianti", "user");
-        loadPlan("2024-11-20", "2024-11-24" , "Barcelona", "user");
-        loadPlan("2025-12-25", "2025-12-31" , "London", "user");
+        List<String> cities = List.of(
+                "Chianti", "Florence", "Rome",
+                "Barcelona", "Canary Islands", "Seville",
+                "Cardiff", "Edinburgh", "London"
+        );
+
+        int PlansNumToGenerate = 25;
+        int startYear = 2020;
+        int endYear = 2025;
+
+        for (int i = 0; i < PlansNumToGenerate; i++) {
+
+            int year = Utils.getRandom(startYear, endYear);
+            String fromDate = year + "-10-11";
+            String toDate = year + "-10-11";
+
+            String city = cities.get(Utils.getRandom(0, cities.size() - 1));
+
+            loadPlan(fromDate, toDate , city, i % 2 == 0 ? "admin" : "user");
+        }
+
+//        loadPlan("2023-10-11", "2023-10-17" , "Chianti", "user");
+//        loadPlan("2024-11-20", "2024-11-24" , "Barcelona", "user");
+//        loadPlan("2025-12-25", "2025-12-31" , "London", "user");
     }
 
     private void loadPlan(String fromDate, String toDate, String city, String username) {
@@ -277,7 +299,7 @@ public class SampleDataLoader implements CommandLineRunner {
                         .setPlan(plan)
                         .setItinerary(itinerary)
                         .setOrder(i + 1)
-                        .setPlace(places.get(getRandom(0, places.size() - 1)));
+                        .setPlace(places.get(Utils.getRandom(0, places.size() - 1)));
 
                 currentActivities.add(activity);
             }
@@ -290,7 +312,7 @@ public class SampleDataLoader implements CommandLineRunner {
         List<Place> myPlaces = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
 
-            Place randomPlace = places.get(getRandom(0, places.size() - 1));
+            Place randomPlace = places.get(Utils.getRandom(0, places.size() - 1));
             myPlaces.add(randomPlace);
         }
 
@@ -318,16 +340,16 @@ public class SampleDataLoader implements CommandLineRunner {
 
     }
 
-    private int getRandom(int min, int max) {
-
-        return random.nextInt(max - min + 1) + min;
-    }
-
-    public double getRandom(double min, double max) {
-
-        double rand = min + new Random().nextDouble() * (max - min);
-        return Math.floor(rand * 100) / 100;
-    }
+//    private int getRandom(int min, int max) {
+//
+//        return random.nextInt(max - min + 1) + min;
+//    }
+//
+//    public double getRandom(double min, double max) {
+//
+//        double rand = min + new Random().nextDouble() * (max - min);
+//        return Math.floor(rand * 100) / 100;
+//    }
 
     private List<Country> addCountries(String... countries) {
 

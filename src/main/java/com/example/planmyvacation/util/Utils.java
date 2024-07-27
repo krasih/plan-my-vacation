@@ -1,9 +1,12 @@
 package com.example.planmyvacation.util;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Utils {
 
@@ -29,6 +32,15 @@ public class Utils {
         return formatDate(date, DEFAULT_DATE_FORMAT);
     }
 
+    public static int getRandom(int min, int max) {
 
+        return new Random().nextInt(max - min + 1) + min;
+    }
+
+    public static double getRandom(double min, double max) {
+
+        double rand = min + new Random().nextDouble() * (max - min);
+        return Math.floor(rand * 100) / 100;
+    }
 
 }
