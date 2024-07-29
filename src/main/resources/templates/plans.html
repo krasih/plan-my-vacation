@@ -108,37 +108,5 @@
 </div>
 
 
-<script>
-    window.onload = function () {
-
-        document.querySelectorAll("[data-qp-class]")
-            .forEach((button) =>
-                button.addEventListener('click', () => {
-
-                    let className = '.' + button.getAttribute("data-qp-class");
-                    let buttonId = button.getAttribute("id");
-
-                    document.querySelectorAll(className).forEach((elem) => elem.removeAttribute("checked"));
-                    document.getElementById(buttonId).setAttribute("checked", "");
-                    getQueryParams();
-
-                })
-            );
-
-    };
-
-    function getQueryParams() {
-
-        let queryParams = "";
-        document.querySelectorAll("[checked]").forEach((elem) =>
-            queryParams += "status=" + elem.getAttribute("value")
-        );
-
-        alert(queryParams)
-    };
-
-</script>
-
-
 </body>
 </html>
