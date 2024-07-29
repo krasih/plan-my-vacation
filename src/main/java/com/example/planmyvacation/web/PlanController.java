@@ -1,5 +1,6 @@
 package com.example.planmyvacation.web;
 
+import com.example.planmyvacation.model.PlansSummaryPages;
 import com.example.planmyvacation.model.dto.*;
 import com.example.planmyvacation.service.CountryService;
 import com.example.planmyvacation.service.PlaceService;
@@ -7,7 +8,10 @@ import com.example.planmyvacation.service.PlanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,19 +46,39 @@ public class PlanController {
     }
 
 
-
-    // TODO: Finish FILTER and SORT implementations in the method below
     @GetMapping()
-    public String getPlans(
+    public Collection<ModelAndView> getAllPlans(
             @RequestParam(value="page", defaultValue = "0", required = false) int pageNo,
-            Model model
+            @RequestParam(value="sortBy", defaultValue = "", required = false) String sortBy,
+            @RequestParam(value="order", defaultValue = "asc", required = false) String sortOrder,
+            @RequestParam(value="status", defaultValue = "", required = false) String planStatus
     ) {
 
-        List<PlanSummaryDTO> plans = planService.getAll(pageNo, DEFAULT_PAGE_SIZE);
+        PlansSummaryPages plans = planService.getAll(pageNo, DEFAULT_PAGE_SIZE, planStatus, sortBy, sortOrder);
 
-        model.addAttribute("plansData", plans);
+        ModelAndView plansPage = new ModelAndView("plans", Map.of(
+                "plansData", plans.getContent(),
+                "currentPage", plans.getPageNo(),
+                "totalPages", plans.getTotalPages(),
+                "planStatus", planStatus
+        ));
 
-        return "plans";
+        ModelAndView plansFragment = new ModelAndView("fragments/tables :: plans", Map.of(
+                "plansData", plans.getContent()
+        ));
+
+        ModelAndView paginationFragment = new ModelAndView("fragments/tables :: pagination", Map.of(
+                "currentPage", plans.getPageNo(),
+                "totalPages", plans.getTotalPages(),
+                "planStatus", planStatus
+        ));
+
+
+        if (!planStatus.isEmpty()) {
+            return List.of( plansFragment, paginationFragment );
+        }
+
+        return List.of( plansPage );
     }
 
     @GetMapping("/create")
@@ -70,7 +94,6 @@ public class PlanController {
 
         Long planId = planService.createPlan(planCreateData);
 
-        // TODO: Must redirect to the newly created plan and open it for editing
         return "redirect:/plans/" + planId;
     }
 

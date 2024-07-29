@@ -20,51 +20,91 @@
 
 
   <!-- FRAGMENT: PLANS TABLE -->
-  <tbody th:fragment="plans(tableData)" >
-  <!--                <tr th:replace="~{fragments/common::navbar(hideStartPlanning='false')}"></tr>-->
-  <!--                <tr th:each="plan: ${plansData}" th:replace="~{plans::table-row(my = ${plan})}"></tr>-->
-    <tr th:each="plan: ${tableData}">
+  <tbody th:fragment="plans" id="plans-table">
+    <tr  th:each="plan: ${plansData}">
       <td th:text="${plan.getLocation()}" class="text-start">City, Country</td>
       <td th:text="${plan.getDates()}">1/9/84 - 1/9/84</td>
       <td th:text="${plan.getUsername()}">Username</td>
       <td th:text="${plan.isActive()}">Is active?</td>
-      <!--<td>
-          &lt;!&ndash;suppress HtmlFormInputWithoutLabel &ndash;&gt;
-          <input type="checkbox"/>
-      </td>-->
       <td>
-
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+
+          <!-- BUTTON: OPEN PLAN -->
           <button class="btn btn-outline-primary btn-sm w-50"
                   hx-confirm="Are you sure?"
                   hx-target="closest tr"
                   hx-swap="outerHTML swap:1s"
                   hx-trigger="click"
-                  th:attr="hx-delete=@{#}">
-            Open
+                  th:attr="hx-get=@{#}"
+                  th:text="Open">
+            OPEN
           </button>
+
+          <!-- BUTTON: DELETE PLAN -->
           <button class="btn btn-outline-danger btn-sm w-50"
                   hx-confirm="Are you sure?"
                   hx-target="closest tr"
                   hx-swap="outerHTML swap:1s"
                   hx-trigger="click"
-                  th:attr="hx-delete=@{#}">
-            Delete
+                  th:attr="hx-delete=@{#}"
+                  th:text="Delete">
+            DELETE
           </button>
         </div>
-
-<!--        <button class="btn btn-danger"-->
-<!--                hx-confirm="Are you sure?"-->
-<!--                hx-target="closest tr"-->
-<!--                hx-swap="outerHTML swap:1s"-->
-<!--                hx-trigger="click"-->
-<!--                th:attr="hx-delete=@{#}">-->
-<!--          Delete-->
-<!--        </button>-->
-
       </td>
     </tr>
   </tbody>
+  <!-- FRAGMENT: PLANS TABLE END -->
+
+
+
+  <!-- FRAGMENT: TABLE PAGINATION -->
+  <div th:fragment="pagination" class="mt-auto mx-auto"
+       id="pagination"
+       hx-swap-oob="outerHTML:#pagination">
+    <div class="col-12 mb-3 input-group-sm">
+      <div class="row input-group-sm" >
+
+        <!-- BUTTON: PAGE LEFT -->
+        <button
+                hx-get="/plans?page=0&status=all"
+                hx-swap="outerHTML"
+                hx-target="#plans-table"
+                hx-trigger="click"
+                id="page-previous"
+                name="plans-page"
+                type="button"
+                class="col-auto btn btn-outline-primary plans-page"
+                value="0"
+                data-qp-class="plans-page"
+                th:disabled="${currentPage} <= 0"><i class="bi bi-caret-left-fill"></i></button>
+
+        <!-- PAGE INFO -->
+        <span class="col-auto input-group-text"
+              th:text="(${currentPage} + 1) + ' of ' + ${totalPages}"
+              th:value="${currentPage}">PAGE OF TOTAL PAGES</span>
+
+        <!-- BUTTON: PAGE RIGHT -->
+        <button
+                hx-get="/plans?page=1&status=all"
+                th:hx-get="@{'/plans?page=' + (${currentPage} + 1) + '&status=' + ${planStatus}}"
+
+                hx-swap="outerHTML"
+                hx-target="#plans-table"
+                hx-trigger="click"
+                id="page-next"
+                name="plans-page"
+                type="button"
+                class="col-auto btn btn-outline-primary plans-page"
+                value="1"
+                data-qp-class="plans-page"
+                th:disabled="${currentPage} >= ${totalPages} - 1"><i class="bi bi-caret-right-fill"></i></button>
+
+      </div>
+    </div>
+  </div>
+  <!-- FRAGMENT: TABLE PAGINATION END -->
+
 
 
 

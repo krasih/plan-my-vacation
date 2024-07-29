@@ -1,5 +1,6 @@
 package com.example.planmyvacation.service;
 
+import com.example.planmyvacation.model.PlansSummaryPages;
 import com.example.planmyvacation.model.dto.PlanCreateDTO;
 import com.example.planmyvacation.model.dto.PlanDetailsDTO;
 import com.example.planmyvacation.model.dto.PlanSummaryDTO;
@@ -10,7 +11,9 @@ public interface PlanService {
 
     Long createPlan(PlanCreateDTO planDTO);
 
-    public List<PlanSummaryDTO> getAll(int pageNo, int pageSize);
+    List<PlanSummaryDTO> getAll(int pageNo, int pageSize);
+
+    PlansSummaryPages getAll(int page, int pageSize, String status, String sortBy, String sortOrder);
 
     PlanDetailsDTO getPlanById(long id);
 
@@ -19,11 +22,5 @@ public interface PlanService {
     void addMyPlace(Long placeId, Long planId);
 
     void addItineraryActivity(Long planId, Long itineraryId, Long placeId);
-
-
-//    TODO: Implement the following methods
-//    void deletePlan(long planId);
-//    List<PlanSummaryDTO> getAllPlansSummary();
-
 
 }

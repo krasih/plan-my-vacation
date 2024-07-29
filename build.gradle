@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.1'
-    id 'io.spring.dependency-management' version '1.1.5'
+    id 'org.springframework.boot' version '3.4.0-SNAPSHOT'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.example'
@@ -15,39 +15,36 @@ java {
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
 
-//    WEB
+    // WEB
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
     // WebJARs
     implementation 'org.webjars:webjars-locator:0.52'                     // For a version-agnostic webjars dependencies
     implementation 'org.webjars:bootstrap:5.3.3'
     implementation 'org.webjars.npm:bootstrap-icons:1.11.3'
     implementation 'org.webjars.npm:htmx.org:2.0.1'
 
-//    DB (Spring Data related)
+    // DB (Spring Data related)
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
-
-//    SECURITY (Spring Security related)
-    // TODO: SECURITY - replace the 3rd-line below with the 2 dependencies above
+    // SECURITY (Spring Security related)
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
-//    implementation 'org.springframework.security:spring-security-crypto'
-
-
-//    MISC
+    // MISC
     implementation 'net.datafaker:datafaker:2.3.1'                  // Generate fake data - great for demos and testing!
     implementation 'org.modelmapper:modelmapper:3.2.0'
 
-
-//    TESTING
+    // TESTING
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

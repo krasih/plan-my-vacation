@@ -1,5 +1,6 @@
 package com.example.planmyvacation.service.impl;
 
+import com.example.planmyvacation.model.PlansSummaryPages;
 import com.example.planmyvacation.model.dto.*;
 import com.example.planmyvacation.model.entity.*;
 import com.example.planmyvacation.repository.LocationRepository;
@@ -13,6 +14,7 @@ import com.example.planmyvacation.util.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,6 +69,40 @@ public class PlanServiceImpl implements PlanService {
         return listOfPlans.stream()
                 .map(this::mapToSummaryDTO)
                 .toList();
+    }
+
+    public PlansSummaryPages getAll(int page, int pageSize, String status, String sortBy, String sortOrder) {
+
+        Sort sort = Sort.by("id").ascending();
+
+        if (!sortBy.isEmpty()) {
+            sort = Sort.by(sortBy).ascending();
+            if ("desc".equals(sortOrder)) sort = Sort.by(sortBy).descending();
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize, sort);
+
+        Page<Plan> plans = planRepository.findAll(pageRequest);
+
+        if ("all".equals(status)) {
+            plans = planRepository.findAll(pageRequest);
+        }
+        else {
+            if ("active".equals(status) || status.isEmpty()) plans = planRepository.findAllByActive(pageRequest, true);
+            if ("inactive".equals(status)) plans = planRepository.findAllByActive(pageRequest, false);
+        }
+
+        List<Plan> listOfPlans = plans.getContent();
+
+        List<PlanSummaryDTO> content = listOfPlans.stream().map(this::mapToSummaryDTO).toList();
+
+        return new PlansSummaryPages()
+                .setContent(content)
+                .setPageNo(plans.getNumber())
+                .setPageSize(plans.getSize())
+                .setTotalElements(plans.getTotalElements())
+                .setTotalPages(plans.getTotalPages())
+                .setLastPage(plans.isLast());
     }
 
     @Override
