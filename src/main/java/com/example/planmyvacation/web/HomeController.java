@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-//    TODO: Merge the getIndex and getHome methods into one
     @GetMapping({"", "/", "/index"})
     public String getIndex(@AuthenticationPrincipal UserDetails userDetails) {
 

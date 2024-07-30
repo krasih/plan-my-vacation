@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:hx-on="http://www.w3.org/1999/xhtml">
 <head>
     <title>Plan My Vacation</title>
     <meta charset="utf-8">
@@ -7,85 +8,114 @@
 
 <body>
 
+
+
 <!-- FRAGMENT: NAVBAR -->
-<nav th:fragment="navbar(hideStartPlanning)" class="col-12 px-4 py-3 bg-dark text-white" data-bs-theme="dark">
-    <div class="d-flex ms-5">
+    <nav id="navbar" th:fragment="navbar(hideStartPlanning)" class="col-12 px-4 py-3 bg-dark text-white" data-bs-theme="dark">
+        <div class="d-flex ms-5">
 
-        <!-- WEBSITE HOME -->
-        <div class="me-5 p-2 d-flex align-items-center">
-            <a th:href="@{/home}" class="navbar-brand border p-2">Plan My Vacation</a>
-        </div>
+            <!-- WEBSITE HOME -->
+            <div class="me-5 p-2 d-flex align-items-center">
+                <a th:href="@{/home}" class="navbar-brand border p-2">Plan My Vacation</a>
+            </div>
 
-        <!-- NAVBAR MENUS -->
-        <div class="me-3 p-2 flex-fill align-self-center">
-            <div class="d-flex justify-content-between">
+            <!-- NAVBAR MENUS -->
+            <div class="me-3 p-2 flex-fill align-self-center">
+                <div class="d-flex justify-content-between">
 
-                <!-- MENU: START PLANNING -->
-                <div class="d-flex align-items-center">
-                    <a th:href="@{/plans/create}"
-                       th:hidden="${hideStartPlanning}"
-                       class="btn btn-dark me-1 py-0 ">Start planning</a>
-                </div>
-
-                <div class="row gx-0">
-
-                    <!-- MENU: LOGIN -->
-                    <div sec:authorize="!isAuthenticated()" class="col-auto">
-                        <a th:href="@{/users/login}" class="btn btn-dark me-1 py-0 fw-bold" type="button">Login</a>
-                    </div>
-                    <div sec:authorize="!isAuthenticated()" class="vr bg-light"></div>
-
-                    <!-- MENU: SIGN UP / REGISTER -->
-                    <div sec:authorize="!isAuthenticated()" class="col-auto">
-                        <a th:href="@{/users/register}" class="btn btn-warning mx-1 py-0 fw-bold">Sign Up</a>
+                    <!-- MENU: START PLANNING -->
+                    <div class="d-flex align-items-center">
+                        <a th:href="@{/plans/create}"
+                           th:hidden="${hideStartPlanning}"
+                           class="btn btn-dark me-1 py-0 ">Start planning</a>
                     </div>
 
-                    <!-- MENU: LOGOUT -->
-                    <!--<div sec:authorize="isAuthenticated()" class="col-auto">
-                        <form th:method="post"
-                              th:action="@{/users/logout}" class="btn btn-link mx-1 py-0">
-                            <input class="btn btn-dark mx-1 py-0 fw-bold" type="submit" value="Logout"/>
-                        </form>
-                    </div>-->
+                    <div class="row gx-0">
 
-                    <div sec:authorize="isAuthenticated()" class="col-auto">
-                        <form th:method="post"
-                              th:action="@{/users/logout}" class="btn btn-link mx-1 py-0">
-                            <input class="btn btn-dark mx-1 py-0 fw-bold" type="submit" value="Logout"/>
-                        </form>
+                        <!-- MENU: LOGIN -->
+                        <div sec:authorize="!isAuthenticated()" class="col-auto">
+                            <a th:href="@{/users/login}" class="btn btn-dark me-1 py-0 fw-bold" type="button"
+                               th:text="#{navbar_login}">LOGIN</a>
+                        </div>
+
+                        <div sec:authorize="!isAuthenticated()" class="vr bg-light"></div>
+
+                        <!-- MENU: SIGN UP / REGISTER -->
+                        <div sec:authorize="!isAuthenticated()" class="col-auto">
+                            <a th:href="@{/users/register}" class="btn btn-warning mx-1 py-0 fw-bold"
+                               th:text="#{navbar_register}">SIGN UP</a>
+                        </div>
+
+                        <!-- MENU: LOGOUT -->
+                        <div sec:authorize="isAuthenticated()" class="col-auto">
+                            <form th:method="POST"
+                                  th:action="@{/users/logout}" class="btn btn-link px-0 py-0">
+                                <input class="btn btn-dark py-0 fw-bold" type="submit" th:value="#{navbar_logout}" />
+                            </form>
+                        </div>
+
+                        <!-- MENU: DROPDOWN-LANGUAGE -->
+                        <div class="dropdown col-auto">
+                            <button id="lang"
+                                    class="btn btn-dark btn-sm mx-1 py-0 dropdown-toggle fw-bold fs-6"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                LANGUAGE
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button hx-get="/?lang=en"
+                                            hx-trigger="click"
+                                            hx-on::after-request="location.reload()"
+                                            class="dropdown-item languages"
+                                            type="button"
+                                            value="en_US"
+                                            th:text="EN">ENGLISH</button>
+                                </li>
+                                <li>
+                                    <button hx-get="/?lang=bg"
+                                            hx-trigger="click"
+                                            hx-on::after-request="location.reload()"
+                                            class="dropdown-item languages"
+                                            type="button"
+                                            value="bg_BG"
+                                            th:text="BG">ENGLISH</button>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
-        </div>
 
-    </div>
-</nav>
+        </div>
+    </nav>
 
 
 
 <!-- FRAGMENT: FOOTER -->
-<footer th:fragment="footer" class="col-12 mt-auto px-2 py-2 bg-dark d-flex flex-wrap justify-content-between align-items-center" style="height: 70px; ">
-    <p class="col-md-4 mb-0 ps-4 text-light">&copy; 2024 Krasimir Hristov</p>
+    <footer th:fragment="footer" class="col-12 mt-auto px-2 py-2 bg-dark d-flex flex-wrap justify-content-between align-items-center" style="height: 70px; ">
+        <p class="col-md-4 mb-0 ps-4 text-light">&copy; 2024 Krasimir Hristov</p>
 
-    <ul class="nav col-md-4 pe-4 justify-content-end ">
-        <li class="nav-item">
-            <a th:href="@{/home}" class="btn btn-dark mx-1">Home</a>
-        </li>
-        <div class="vr bg-light"></div>
-        <li class="nav-item">
-            <a th:href="@{/contacts}" class="btn btn-dark mx-1">Contacts</a>
-        </li>
-        <div class="vr bg-light"></div>
-        <li class="nav-item">
-            <a th:href="@{/jobs}" class="btn btn-dark mx-1">Careers</a>
-        </li>
-        <div class="vr bg-light"></div>
-        <li class="nav-item">
-            <a th:href="@{/about}" class="btn btn-dark mx-1">About</a>
-        </li>
-    </ul>
-</footer>
+        <ul class="nav col-md-4 pe-4 justify-content-end ">
+            <li class="nav-item">
+                <a th:href="@{/home}" class="btn btn-dark mx-1">Home</a>
+            </li>
+            <div class="vr bg-light"></div>
+            <li class="nav-item">
+                <a th:href="@{/contacts}" class="btn btn-dark mx-1">Contacts</a>
+            </li>
+            <div class="vr bg-light"></div>
+            <li class="nav-item">
+                <a th:href="@{/jobs}" class="btn btn-dark mx-1">Careers</a>
+            </li>
+            <div class="vr bg-light"></div>
+            <li class="nav-item">
+                <a th:href="@{/about}" class="btn btn-dark mx-1">About</a>
+            </li>
+        </ul>
+    </footer>
 
 
 </body>

@@ -14,11 +14,14 @@
     <!-- HTMX -->
     <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
 
+    <script type="text/javascript" th:src="@{/js/navbarLanguageSelect.js}" defer></script>
+
 </head>
 <body>
 
 
 <div class="d-flex align-items-start flex-column text-bg-light" style="height: 100vh;">
+
 
     <!-- NAVIGATION -->
     <div th:replace="~{fragments/common::navbar(hideStartPlanning='false')}"></div>
@@ -102,8 +105,10 @@
 
     </div>
 
+
     <!-- FOOTER -->
     <div th:replace="~{fragments/common::footer}"></div>
+
 
 </div>
 
