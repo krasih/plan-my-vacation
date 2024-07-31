@@ -2,6 +2,7 @@ package com.example.planmyvacation.web;
 
 import com.example.planmyvacation.model.dto.UserRegisterDTO;
 import com.example.planmyvacation.service.UserService;
+import com.example.planmyvacation.validation.UserRegistrationValidation;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final UserRegistrationValidation validation;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRegistrationValidation validation) {
         this.userService = userService;
+        this.validation = validation;
     }
 
     @ModelAttribute("registerData")
@@ -44,7 +47,12 @@ public class UserController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        if (bindingResult.hasErrors() /*|| !userService.registerUser(userDTO)*/) {
+
+        validation.confirmPasswordMatchPassword(userDTO, bindingResult);
+        validation.usernameExists(userDTO, bindingResult);
+        validation.emailExists(userDTO, bindingResult);
+
+        if ( bindingResult.hasErrors() ) {
             redirectAttributes.addFlashAttribute("registerData", userDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
             return "redirect:/users/register";

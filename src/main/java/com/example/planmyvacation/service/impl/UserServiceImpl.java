@@ -7,6 +7,8 @@ import com.example.planmyvacation.repository.RoleRepository;
 import com.example.planmyvacation.repository.UserRepository;
 import com.example.planmyvacation.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,27 +21,29 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final MessageSource messageSource;
 
     public UserServiceImpl(
             ModelMapper modelMapper,
             PasswordEncoder passwordEncoder,
             UserRepository userRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository, MessageSource messageSource) {
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.messageSource = messageSource;
     }
 
     @Override
     public boolean registerUser(UserRegisterDTO userDTO) {
 
         // Check if password and confirmPassword matches
-        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) return false;
+//        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) return false;
 
         // Check if user with such username or email exists
-        Optional<User> existingUser = userRepository.findByUsernameOrEmail(userDTO.getUsername(), userDTO.getEmail());
-        if (existingUser.isPresent()) return false;
+//        Optional<User> existingUser = userRepository.findByUsernameOrEmail(userDTO.getUsername(), userDTO.getEmail());
+//        if (existingUser.isPresent()) return false;
 
         User user = mapDtoToEntity(userDTO);
 

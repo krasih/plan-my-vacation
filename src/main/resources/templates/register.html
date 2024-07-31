@@ -15,7 +15,6 @@
     <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
 
     <script type="text/javascript" th:src="@{/js/navbarLanguageSelect.js}" defer></script>
-<!--    <script type="text/javascript" th:src="@{/js/formSubmissionsStarter.js}" defer></script>-->
 
 </head>
 <body>
@@ -43,7 +42,7 @@
                 <div class="d-flex flex-column align-items-center" style="gap: 2.4rem">
 
                     <!-- USERNAME -->
-                    <div class="col-11 form-floating">
+                    <div class="col-12 form-floating">
                         <input th:field="*{username}"
                                th:classappend="${not #lists.isEmpty(#fields.errors('username'))} ? 'is-invalid'"
                                type="text" class="form-control" id="username" name="username">
@@ -54,7 +53,7 @@
                     </div>
 
                     <!-- EMAIL -->
-                    <div class="col-11 form-floating">
+                    <div class="col-12 form-floating">
                         <input th:field="*{email}"
                                th:classappend="${not #lists.isEmpty(#fields.errors('email'))} ? 'is-invalid'"
                                type="email" class="form-control" id="email" name="email" >
@@ -65,7 +64,7 @@
                     </div>
 
                     <!-- PASSWORD -->
-                    <div class="col-11 form-floating">
+                    <div class="col-12 form-floating">
                         <input th:classappend="${not #lists.isEmpty(#fields.errors('password'))} ? 'is-invalid'"
                                type="password" class="form-control" id="password" name="password">
                         <label th:text="#{page_register_password}" for="password">
@@ -75,10 +74,13 @@
                     </div>
 
                     <!-- CONFIRM PASSWORD -->
-                    <div class="col-11 form-floating">
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                    <div class="col-12 form-floating">
+                        <input th:classappend="${not #lists.isEmpty(#fields.errors('confirmPassword'))} ? 'is-invalid'"
+                               type="password" class="form-control" id="confirmPassword" name="confirmPassword">
                         <label th:text="#{page_register_confirm_password}" for="confirmPassword">
                             CONFIRM PASSWORD</label>
+                        <div th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- SUBMIT: REGISTER -->
