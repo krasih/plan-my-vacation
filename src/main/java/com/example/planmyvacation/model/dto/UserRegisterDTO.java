@@ -1,6 +1,7 @@
 package com.example.planmyvacation.model.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -8,16 +9,16 @@ public class UserRegisterDTO {
 
     private long id;
 
-    @NotNull
-    @Size(min = 4, max = 20)
+    @NotNull(message = "{msg.username.length}")
+    @Size(message = "{msg.username.length}", min = 4, max = 20)
     private String username;
 
-    @NotNull
-    @Email
+    @NotBlank(message = "{msg.email.length}")
+    @Email(message = "{msg.email.not.valid}")
     private String email;
 
-    @NotNull
-    @Size(min = 4, max = 20)
+    @NotNull(message = "{msg.password.length}")
+    @Size(message = "{msg.password.length}", min = 4, max = 20)
     private String password;
 
     private String confirmPassword;

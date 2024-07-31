@@ -54,23 +54,23 @@
         <section class="container py-3 pb-0 text-center ">
             <div class="row pt-3 pb-0">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Ready for an adventure?</h1>
-                    <p class="lead text-body-secondary mb-5">Browse top destinations, restaurants, and things to do and save your faves to your itinerary as you go.</p>
+                    <h1 th:text="#{page_home_title}" class="fw-light">TITLE</h1>
+                    <p th:text="#{page_home_descr}" class="lead text-body-secondary mb-5">DESCRIPTION</p>
 
                     <!-- QUOTE -->
                     <figure>
                         <blockquote class="blockquote fs-6">
-                            <p class="fw-light">The world is a book, and those who do not travel read only one page.</p>
+                            <p th:text="#{page_home_quote}" class="fw-light">QUOTE</p>
                         </blockquote>
                         <figcaption class="blockquote-footer">
                             <!-- Saint Augustine-->
-                            <cite title="Source Title">Saint Augustine</cite>
+                            <cite th:text="#{page_home_quote_author}" title="Source Title">QUOTE AUTHOR</cite>
                         </figcaption>
                     </figure>
 
                     <p>
-                        <a href="#" class="btn btn-primary my-2">My profile</a>
-                        <a href="#" class="btn btn-secondary my-2">My statistics</a>
+                        <a th:text="#{page_home_my_profile}" href="#" class="btn btn-primary my-2">MY PROFILE</a>
+                        <!--<a href="#" class="btn btn-secondary my-2">My statistics</a>-->
                     </p>
                 </div>
             </div>
@@ -85,16 +85,16 @@
                     <a th:replace="~{fragments/menus::homepage-menu(
                         link = '/plans/create',
                         image = 'new-plan.jpg',
-                        header = 'CREATE NEW PLAN',
-                        body = 'Do you have already an idea of your next adventure destination? Follow the link to start a new plan for your next epic trip.'
+                        header = #{page_home_create_new_plan},
+                        body = #{page_home_create_new_plan_descr}
                         )}"></a>
 
                     <!-- SECTION: ALL PLANS [ROLE: ALL] -->
                     <a th:replace="~{fragments/menus::homepage-menu(
                         link = '/plans',
                         image = 'all-plans.jpg',
-                        header = 'PLANS',
-                        body = 'TODO: Add description.'
+                        header = #{page_home_plans},
+                        body = #{page_home_plans_descr}
                         )}"></a>
 
                     <!-- SECTION: EDIT LOCATION [ROLE: ADMIN] -->
@@ -102,8 +102,8 @@
                        th:replace="~{fragments/menus::homepage-menu(
                         link = '/locations',
                         image = 'edit-location.jpg',
-                        header = 'EDIT LOCATION',
-                        body = 'TODO: Add description.'
+                        header = #{page_home_edit_location},
+                        body = #{page_home_edit_location_descr}
                         )}"></a>
 
                     <!-- SECTION: ALL USERS [ROLE: ADMIN] -->
@@ -111,8 +111,8 @@
                        th:replace="~{fragments/menus::homepage-menu(
                         link = '/users',
                         image = 'all-users.jpg',
-                        header = 'ALL USERS',
-                        body = 'TODO: Add description.'
+                        header = #{page_home_all_users},
+                        body = #{page_home_all_users_descr}
                         )}"></a>
 
                     <!-- SECTION: STATISTICS [ROLE: ADMIN] -->
@@ -120,8 +120,8 @@
                        th:replace="~{fragments/menus::homepage-menu(
                         link = '/statistics',
                         image = 'stats.jpg',
-                        header = 'STATISTICS',
-                        body = 'TODO: Add description.'
+                        header = #{page_home_statistics},
+                        body = #{page_home_statistics_descr}
                         )}"></a>
 
                 </div>

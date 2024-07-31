@@ -12,8 +12,10 @@ public class PlanCreateDTO {
 
     private long id;
 
+
     private String cityName;
 
+    @NotNull
     private LocalDate startDate;
 
     private LocalDate endDate;

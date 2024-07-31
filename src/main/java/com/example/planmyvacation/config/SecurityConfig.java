@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
    /* @Bean
@@ -45,8 +47,8 @@ public class SecurityConfig {
                                 .passwordParameter("password")
                                 // What will happen if the login is successful
                                 .defaultSuccessUrl("/", true)
-                                // What will happen if the login fails
-                                .failureForwardUrl("/users/login-error")
+                                // What will happen if the login fails (commented due to login validation)
+//                                .failureForwardUrl("/users/login?error")
                 )
                 .logout(
                         logout ->

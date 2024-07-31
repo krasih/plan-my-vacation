@@ -46,8 +46,7 @@ public class UserController {
     ) {
         if (bindingResult.hasErrors() /*|| !userService.registerUser(userDTO)*/) {
             redirectAttributes.addFlashAttribute("registerData", userDTO);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.registerData", bindingResult);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
             return "redirect:/users/register";
         }
 

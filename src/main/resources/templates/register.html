@@ -15,6 +15,7 @@
     <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
 
     <script type="text/javascript" th:src="@{/js/navbarLanguageSelect.js}" defer></script>
+<!--    <script type="text/javascript" th:src="@{/js/formSubmissionsStarter.js}" defer></script>-->
 
 </head>
 <body>
@@ -36,40 +37,55 @@
             <form th:method="POST"
                   th:action="@{/users/register}"
                   th:object="${registerData}"
-                  class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+                  novalidate
+                  class="main-form needs-validation mx-auto col-md-8 d-flex flex-column justify-content-center">
 
-
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem">
+                <div class="d-flex flex-column align-items-center" style="gap: 2.4rem">
 
                     <!-- USERNAME -->
-                    <div class="col-sm-10 form-floating">
-                        <input type="text" class="form-control" id="username" name="username" th:field="*{username}">
-                        <label for="username">username</label>
+                    <div class="col-11 form-floating">
+                        <input th:field="*{username}"
+                               th:classappend="${not #lists.isEmpty(#fields.errors('username'))} ? 'is-invalid'"
+                               type="text" class="form-control" id="username" name="username">
+                        <label th:text="#{page_register_username}" for="username">
+                            USERNAME</label>
+                        <div th:each="err : ${#fields.errors('username')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- EMAIL -->
-                    <div class="col-sm-10 form-floating">
-                        <input type="email" class="form-control" id="email" name="email" th:field="*{email}">
-                        <label for="email">email</label>
+                    <div class="col-11 form-floating">
+                        <input th:field="*{email}"
+                               th:classappend="${not #lists.isEmpty(#fields.errors('email'))} ? 'is-invalid'"
+                               type="email" class="form-control" id="email" name="email" >
+                        <label th:text="#{page_register_email}" for="email">
+                            EMAIL</label>
+                        <div th:each="err : ${#fields.errors('email')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- PASSWORD -->
-                    <div class="col-sm-10 form-floating">
-                        <input type="password" class="form-control" id="password" name="password">
-                        <label for="password">password</label>
+                    <div class="col-11 form-floating">
+                        <input th:classappend="${not #lists.isEmpty(#fields.errors('password'))} ? 'is-invalid'"
+                               type="password" class="form-control" id="password" name="password">
+                        <label th:text="#{page_register_password}" for="password">
+                            PASSWORD</label>
+                        <div th:each="err : ${#fields.errors('password')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- CONFIRM PASSWORD -->
-                    <div class="col-sm-10 form-floating">
+                    <div class="col-11 form-floating">
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
-                        <label for="confirmPassword">confirm password</label>
+                        <label th:text="#{page_register_confirm_password}" for="confirmPassword">
+                            CONFIRM PASSWORD</label>
                     </div>
 
-                    <!-- REGISTER -->
+                    <!-- SUBMIT: REGISTER -->
                     <div class="row">
                         <div class="col col-md-4">
                             <div class="button-holder">
-                                <input type="submit" class="btn btn-warning btn-lg" value="Register"/>
+                                <input th:value="#{page_register_register}" type="submit" class="btn btn-warning btn-lg" />
                             </div>
                         </div>
                     </div>

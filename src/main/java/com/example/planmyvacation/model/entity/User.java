@@ -21,7 +21,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//    TODO: Maybe it should be @ManyToOne ???
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
