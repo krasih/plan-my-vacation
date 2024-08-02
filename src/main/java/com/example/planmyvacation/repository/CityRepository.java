@@ -12,4 +12,6 @@ public interface CityRepository extends JpaRepository<City, Long> {
 
 //    List<City> findAllByCountry_NameOrderOrderByNameAsc();
 
+    boolean existsCityByName(String name);
+
 }

@@ -49,12 +49,15 @@
                         th:method="POST"
                         th:action="@{/plans/create}"
                         th:object="${planCreateData}"
-                        class="main-form mx-auto d-flex flex-column justify-content-center align-items-center">
+                        novalidate
+                        class="main-form needs-validation mx-auto d-flex flex-column justify-content-center align-items-center">
 
                     <!-- INPUT: LOCATION -->
-                    <div class="form-group col-lg-8 col-md-6 mb-3">
+                    <div class="form-group col-lg-8 col-md-6 position-relative" style="margin-bottom: 2.4rem">
                         <label th:for="cityName" class="text-center text-white font-weight-bold">Where</label>
-                        <select th:field="*{cityName}" id="cityName" name="cityName" class="form-control">
+                        <select th:field="*{cityName}"
+                                th:classappend="${not #lists.isEmpty(#fields.errors('cityName'))} ? 'is-invalid'"
+                                id="cityName" name="cityName" class="form-control">
                             <option value="">- Select a location -</option>
                             <optgroup th:each="entry : ${countriesData}" th:label="${entry.key}">
                                 <option th:each="city: ${entry.value}"
@@ -62,18 +65,30 @@
                                         th:text="${city.getName()}">City</option>
                             </optgroup>
                         </select>
+                        <div th:each="err : ${#fields.errors('cityName')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- INPUT: START DATE -->
-                    <div class="form-group col-lg-8 col-md-6 mb-3">
-                        <label th:for="startDate" class="text-center text-white font-weight-bold">From</label>
-                        <input th:field="*{startDate}" type="date" class="form-control" id="startDate"/>
+                    <div class="form-group col-lg-8 col-md-6 position-relative" style="margin-bottom: 2.4rem">
+                        <label th:text="#{page_plans_create_startdate}" th:for="startDate" class="text-center text-white font-weight-bold">
+                            FROM</label>
+                        <input th:field="*{startDate}"
+                               th:classappend="${not #lists.isEmpty(#fields.errors('startDate'))} ? 'is-invalid'"
+                               type="date" class="form-control" id="startDate"/>
+                        <div th:each="err : ${#fields.errors('startDate')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- INPUT: END DATE -->
-                    <div class="form-group col-lg-8 col-md-6 mb-3">
-                        <label th:for="endDate" class="text-center text-white font-weight-bold">To</label>
-                        <input th:field="*{endDate}" type="date" class="form-control" id="endDate"/>
+                    <div class="form-group col-lg-8 col-md-6 mb-3 position-relative">
+                        <label th:text="#{page_plans_create_enddate}"  th:for="endDate" class="text-center text-white font-weight-bold">
+                            TO</label>
+                        <input th:field="*{endDate}"
+                               th:classappend="${not #lists.isEmpty(#fields.errors('endDate'))} ? 'is-invalid'"
+                               type="date" class="form-control" id="endDate"/>
+                        <div th:each="err : ${#fields.errors('endDate')}" th:text="${err}"
+                             class="invalid-tooltip">INVALID DATA</div>
                     </div>
 
                     <!-- BUTTON: START PLANNING -->

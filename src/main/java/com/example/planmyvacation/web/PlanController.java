@@ -5,13 +5,17 @@ import com.example.planmyvacation.model.dto.*;
 import com.example.planmyvacation.service.CountryService;
 import com.example.planmyvacation.service.PlaceService;
 import com.example.planmyvacation.service.PlanService;
+import com.example.planmyvacation.validation.PlanCreateValidation;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +28,16 @@ public class PlanController {
     private final PlanService planService;
     private final CountryService countryService;
     private final PlaceService placeService;
+    private final PlanCreateValidation validation;
 
     public PlanController(
             PlanService planService,
             CountryService countryService,
-            PlaceService placeService) {
+            PlaceService placeService, PlanCreateValidation validation) {
         this.planService = planService;
         this.countryService = countryService;
         this.placeService = placeService;
+        this.validation = validation;
     }
 
     @ModelAttribute("planCreateData")
@@ -89,10 +95,21 @@ public class PlanController {
 
     @PostMapping("/create")
     public String doPlanCreate(
-            PlanCreateDTO planCreateData
+            @Valid PlanCreateDTO planDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
     ) {
 
-        Long planId = planService.createPlan(planCreateData);
+        validation.cityExists(planDTO, bindingResult);
+        validation.startDateBeforeEndDate(planDTO, bindingResult);
+
+        if ( bindingResult.hasErrors() ) {
+            redirectAttributes.addFlashAttribute("planCreateData", planDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.planCreateData", bindingResult);
+            return "redirect:/plans/create";
+        }
+
+        Long planId = planService.createPlan(planDTO);
 
         return "redirect:/plans/" + planId;
     }

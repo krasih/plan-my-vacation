@@ -1,23 +1,21 @@
 package com.example.planmyvacation.model.dto;
 
-import com.example.planmyvacation.model.entity.Location;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class PlanCreateDTO {
 
     private long id;
 
-
+    @NotBlank(message = "{msg.city.not.empty}")
     private String cityName;
 
-    @NotNull
+    @NotNull(message = "{msg.date.not.empty}")
     private LocalDate startDate;
 
+    @NotNull(message = "{msg.date.not.empty}")
     private LocalDate endDate;
 
     public PlanCreateDTO() {

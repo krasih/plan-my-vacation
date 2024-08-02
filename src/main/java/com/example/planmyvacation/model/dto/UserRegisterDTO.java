@@ -1,6 +1,5 @@
 package com.example.planmyvacation.model.dto;
 
-import com.example.planmyvacation.validation.PasswordMatching;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
