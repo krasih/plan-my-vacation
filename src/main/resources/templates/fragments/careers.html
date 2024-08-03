@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modals</title>
+
+  <!-- Bootstrap CSS -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <!-- Bootstrap Icons -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+  <!-- Bootstrap JS -->
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+  <!-- HTMX -->
+  <script type="text/javascript" th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
+
+</head>
+<body>
+
+
+
+  <!-- FRAGMENT: CAREERS -->
+  <ul th:fragment="careers"
+      id="careers-list"
+      class="row row-cols-1 row-cols-md-3 gy-5 list-unstyled">
+
+    <!--JOB CARD-->
+    <li th:each="career: ${careersData}">
+      <div class="col">
+        <div class="card " style="width: 24rem;">
+
+          <div th:text="${career.category}" class="lead card-header text-body-secondary">
+            JOB CATEGORY</div>
+
+          <div class="card-body">
+            <h5 th:text="${career.title}" class="card-title text-center">
+              JOB TITLE</h5>
+
+            <p th:text="${career.description}" class="card-text">
+               JOB DESCRIPTION</p>
+
+            <div class="d-flex justify-content-center">
+              <div class="btn-group row w-100" role="group">
+
+                <!-- BUTTON: APPLY -->
+                <button class="col-3 btn btn-primary btn-sm"
+                        hx-target="closest tr"
+                        hx-swap="outerHTML swap:1s"
+                        hx-trigger="click"
+                        th:attr="hx-get=@{#}"
+                        th:text="Apply">
+                  APPLY
+                </button>
+
+                <!-- BUTTON: EDIT -->
+                <button sec:authorize="hasRole('ADMIN')"
+                        th:hx-get="@{'/api/careers/' + ${career.id}}"
+                        hx-target="#modals-here"
+                        hx-trigger="click"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modals-here"
+                        class="col-3 btn btn-warning btn-sm mx-2"
+                        th:text="Edit">
+                  EDIT
+                </button>
+
+                <!-- BUTTON: DELETE -->
+                <button sec:authorize="hasRole('ADMIN')"
+                        class="col-3 btn btn-danger btn-sm"
+                        hx-confirm="Are you sure?"
+                        hx-target="closest tr"
+                        hx-swap="outerHTML swap:1s"
+                        hx-trigger="click"
+                        th:attr="hx-delete=@{#}"
+                        th:text="Delete">
+                  DELETE
+                </button>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="card-footer">
+            <small th:text="'Published: ' + ${career.published}" class="text-body-secondary">
+              PUBLISHED</small>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <!-- FRAGMENT: CAREERS END -->
+
+
+
+
+</body>
+</html>

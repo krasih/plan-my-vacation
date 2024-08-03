@@ -47,12 +47,6 @@ public class HomeController {
         return "contacts";
     }
 
-    @GetMapping("/jobs")
-    public String getJobs() {
-
-        return "jobs";
-    }
-
     @GetMapping("/about")
     public String getAbout() {
 

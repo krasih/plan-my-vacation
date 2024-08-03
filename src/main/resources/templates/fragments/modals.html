@@ -99,6 +99,78 @@
     </div>
   </div>
 </div>
+<!-- FRAGMENT: TOP-PLACES END -->
+
+
+
+
+
+<!-- FRAGMENT: EDIT CAREER -->
+<div th:fragment="editCareerFragment" class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content" th:object="${careerData}">
+
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="exampleModalLabel">
+        ID: <span th:text="*{id}"></span></h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+      <form id="editJobForm" th:object="${careerData}">
+        <div class="mb-3">
+          <label th:text="Category" for="category" class="col-form-label">
+            JOB CATEGORY</label>
+          <input th:field="*{category}" type="text" list="datalistOptions" class="form-control" id="category" name="category" placeholder="Type to search...">
+          <datalist id="datalistOptions">
+            <option value="Communications">
+            <option value="Development">
+            <option value="Finance">
+            <option value="Management">
+            <option value="Sales">
+          </datalist>
+        </div>
+        <div class="mb-3">
+          <label th:text="Title"  for="title" class="col-form-label">
+            JOB TITLE</label>
+          <input th:field="*{title}" type="text" class="form-control" id="title" name="title">
+        </div>
+        <div class="mb-3">
+          <label th:text="Description" for="description" class="col-form-label">
+            JOB DESCRIPTION</label>
+          <textarea th:field="*{description}" class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+          <label th:text="Published" for="published" class="col-form-label">
+            JOB PUBLISHED</label>
+          <input th:field="*{published}" type="text" class="form-control" id="published" name="published">
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+
+      <!-- BUTTON: CANCEL -->
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+      <!-- BUTTON: SAVE CHANGES -->
+      <button th:hx-put="@{'/api/careers/' + ${careerData.id}}"
+              hx-include="#editJobForm"
+              hx-target="#careers-list"
+              hx-swap="outerHTML"
+              hx-trigger="click"
+              data-bs-dismiss="modal"
+              class="btn btn-primary">
+        Save changes
+      </button>
+
+    </div>
+  </div>
+
+</div>
+<!-- FRAGMENT: EDIT CAREER END -->
+
+
+
 
 
 </body>

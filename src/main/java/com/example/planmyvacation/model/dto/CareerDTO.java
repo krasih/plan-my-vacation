@@ -1,36 +1,31 @@
-package com.example.planmyvacation.model.entity;
+package com.example.planmyvacation.model.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "careers")
-public class Career {
+public class CareerDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "{msg.category.not.empty}")
     private String category;
 
-    @Column(nullable = false)
+    @NotBlank(message = "{msg.title.not.empty}")
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "{msg.descr.not.empty}")
     private String description;
 
-    @Column(nullable = false)
+    @NotBlank(message = "{msg.category.not.empty}")
     private String published;
 
-
-    public Career() {
+    public CareerDTO() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public Career setId(long id) {
+    public CareerDTO setId(Long id) {
         this.id = id;
         return this;
     }
@@ -39,7 +34,7 @@ public class Career {
         return category;
     }
 
-    public Career setCategory(String category) {
+    public CareerDTO setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -48,7 +43,7 @@ public class Career {
         return title;
     }
 
-    public Career setTitle(String title) {
+    public CareerDTO setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -57,7 +52,7 @@ public class Career {
         return description;
     }
 
-    public Career setDescription(String description) {
+    public CareerDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -66,7 +61,7 @@ public class Career {
         return published;
     }
 
-    public Career setPublished(String published) {
+    public CareerDTO setPublished(String published) {
         this.published = published;
         return this;
     }

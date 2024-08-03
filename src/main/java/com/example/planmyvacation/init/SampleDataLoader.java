@@ -24,7 +24,6 @@ public class SampleDataLoader implements CommandLineRunner {
     private List<City> cities_es = addCities("Barcelona", "Canary Islands", "Seville");
     private List<City> cities_uk = addCities("Cardiff", "Edinburgh", "London");
 
-    private final CareerRepository careerRepository;
     private final CountryRepository countryRepository;
     private final CityRepository cityRepository;
     private final LocationRepository locationRepository;
@@ -40,7 +39,6 @@ public class SampleDataLoader implements CommandLineRunner {
     private final Random random;
 
     public SampleDataLoader(
-            CareerRepository careerRepository,
             CountryRepository countryRepository,
             CityRepository cityRepository,
             LocationRepository locationRepository,
@@ -53,7 +51,6 @@ public class SampleDataLoader implements CommandLineRunner {
             ActivityRepository activityRepository,
             PasswordEncoder passwordEncoder, Faker faker
     ) {
-        this.careerRepository = careerRepository;
         this.countryRepository = countryRepository;
         this.cityRepository = cityRepository;
         this.locationRepository = locationRepository;
@@ -74,7 +71,7 @@ public class SampleDataLoader implements CommandLineRunner {
 
         initSampleData();
 
-        loadCareers();
+//        loadCareers();
         loadCountriesAndCities(countries);
         loadLocations();
         loadUsersAndRoles();
@@ -83,7 +80,7 @@ public class SampleDataLoader implements CommandLineRunner {
         loadPlans();
     }
 
-    private void loadCareers() {
+    /*private void loadCareers() {
 
         if (careerRepository.count() > 0) return;
 
@@ -97,7 +94,7 @@ public class SampleDataLoader implements CommandLineRunner {
                 .toList();
 
         careerRepository.saveAll(careers);
-    }
+    }*/
 
     private void loadCountriesAndCities(List<Country> countries) {
 
