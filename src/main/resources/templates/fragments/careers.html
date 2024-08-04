@@ -24,8 +24,8 @@
       id="careers-list"
       class="row row-cols-1 row-cols-md-3 gy-5 list-unstyled">
 
-    <!--JOB CARD-->
-    <li th:each="career: ${careersData}">
+    <!--JOB CARDS-->
+    <li th:each="career: ${careersData}" th:id="'job_' + ${career.id}">
       <div class="col">
         <div class="card " style="width: 24rem;">
 
@@ -66,12 +66,12 @@
 
                 <!-- BUTTON: DELETE -->
                 <button sec:authorize="hasRole('ADMIN')"
-                        class="col-3 btn btn-danger btn-sm"
+                        th:hx-delete="@{'/api/careers/' + ${career.id}}"
                         hx-confirm="Are you sure?"
-                        hx-target="closest tr"
-                        hx-swap="outerHTML swap:1s"
+                        hx-target="#careers-list"
+                        hx-swap="outerHTML"
                         hx-trigger="click"
-                        th:attr="hx-delete=@{#}"
+                        class="col-3 btn btn-danger btn-sm"
                         th:text="Delete">
                   DELETE
                 </button>
@@ -87,6 +87,69 @@
         </div>
       </div>
     </li>
+
+
+    <!-- NEW JOB CARD -->
+    <li id="job_new" sec:authorize="hasRole('ADMIN')">
+      <div class="col">
+        <div class="card " style="width: 24rem;">
+
+          <form id="createNewJobForm" th:object="${newCareerData}">
+
+            <div class="lead card-header text-body-secondary">
+              <input th:field="*{category}" type="text" list="datalistOptions" class="form-control" id="category" name="category" placeholder="Category">
+              <datalist id="datalistOptions">
+                <option value="Communications">
+                <option value="Development">
+                <option value="Finance">
+                <option value="Management">
+                <option value="Sales">
+              </datalist>
+            </div>
+
+            <div class="card-body">
+              <input th:field="*{title}" type="text" class="form-control card-title text-center h5" id="title" name="title" placeholder="Title">
+              <textarea th:field="*{description}" class="form-control card-text" id="description" name="description" rows="3" placeholder="Description"></textarea>
+
+              <div class="mt-2 d-flex justify-content-center">
+                <div class="btn-group row w-100" role="group">
+
+                  <!-- TODO BUTTON: CANCEL -->
+                  <button th:hx-get="@{'/api/careers'}"
+                          hx-target="#careers-list"
+                          hx-swap="outerHTML"
+                          hx-trigger="click"
+                          class="col-3 btn btn-secondary btn-sm"
+                          th:text="Cancel">
+                    CANCEL
+                  </button>
+
+                  <!-- BUTTON: ADD JOB -->
+                  <button
+                          th:hx-post="@{'/api/careers'}"
+                          hx-include="#createNewJobForm"
+                          hx-target="#careers-list"
+                          hx-swap="outerHTML"
+                          hx-trigger="click"
+                          class="col-3 btn btn-primary btn-sm ms-2"
+                          th:text="Add">
+                    ADD JOB
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <input th:field="*{published}" type="text" class="form-control" id="published" name="published" placeholder="Published">
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </li>
+    <!-- NEW JOB CARD END -->
+
   </ul>
   <!-- FRAGMENT: CAREERS END -->
 
