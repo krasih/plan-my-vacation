@@ -126,6 +126,14 @@ public class PlanController {
         return "plan";
     }
 
+    @DeleteMapping("/{id}")
+    public String deletePlan( @PathVariable Long id ) {
+
+        planService.deletePlan(id);
+
+        return "fragments/modals :: empty_card";
+    }
+
     @PostMapping("/{planId}/places/{placeId}")
     public String addToMyPlaces(@PathVariable("planId") Long planId, @PathVariable("placeId") Long placeId) {
 

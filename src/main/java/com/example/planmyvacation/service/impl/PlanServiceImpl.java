@@ -62,6 +62,12 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+    public void deletePlan(Long id) {
+
+        planRepository.deleteById(id);
+    }
+
+    @Override
     public List<PlanSummaryDTO> getAll(int pageNo, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNo, pageSize);

@@ -16,6 +16,12 @@
 
     <script type="text/javascript" th:src="@{/js/navbarLanguageSelect.js}" defer></script>
 
+    <style>
+        tr.htmx-swapping td {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+    </style>
 </head>
 <body>
 
@@ -86,6 +92,8 @@
         <table th:object="${plansData}" class="table table-sm table-hover align-middle text-center">
             <thead>
             <tr class="table-primary fs-5">
+                <th scope="col" class="col py-2" th:text="ID">
+                    ID </th>
                 <th scope="col" class="col py-2" th:text="Location">
                     LOCATION </th>
                 <th scope="col" class="col py-2" th:text="Dates">

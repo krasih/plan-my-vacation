@@ -20,17 +20,25 @@
 
 
   <!-- FRAGMENT: PLANS TABLE -->
-  <tbody th:fragment="plans" id="plans-table">
-    <tr  th:each="plan: ${plansData}">
+  <tbody th:fragment="plans" id="plans-table"
+         hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s">
+    <tr th:each="plan: ${plansData}">
+      <td th:text="${plan.id}">ID</td>
       <td th:text="${plan.getLocation()}" class="text-start">City, Country</td>
       <td th:text="${plan.getDates()}">1/9/84 - 1/9/84</td>
       <td th:text="${plan.getUsername()}">Username</td>
       <td th:text="${plan.isActive()}">Is active?</td>
-      <td>
+      <td th:object="${plan}">
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
           <!-- BUTTON: OPEN PLAN -->
-          <button class="btn btn-outline-primary btn-sm w-50"
+          <a th:href="@{'/plans/' + *{id}}"
+                  class="btn btn-outline-primary btn-sm w-50"
+                  th:text="Open">
+            OPEN
+          </a>
+
+          <!--<button class="btn btn-outline-primary btn-sm w-50"
                   hx-confirm="Are you sure?"
                   hx-target="closest tr"
                   hx-swap="outerHTML swap:1s"
@@ -38,10 +46,16 @@
                   th:attr="hx-get=@{#}"
                   th:text="Open">
             OPEN
-          </button>
+          </button>-->
 
           <!-- BUTTON: DELETE PLAN -->
-          <button class="btn btn-outline-danger btn-sm w-50"
+          <button th:hx-delete="@{'/plans/' + *{id}}"
+                  class="btn btn-outline-danger btn-sm w-50"
+                  th:text="Delete">
+            DELETE
+          </button>
+
+          <!--<button class="btn btn-outline-danger btn-sm w-50"
                   hx-confirm="Are you sure?"
                   hx-target="closest tr"
                   hx-swap="outerHTML swap:1s"
@@ -49,7 +63,8 @@
                   th:attr="hx-delete=@{#}"
                   th:text="Delete">
             DELETE
-          </button>
+          </button>-->
+
         </div>
       </td>
     </tr>

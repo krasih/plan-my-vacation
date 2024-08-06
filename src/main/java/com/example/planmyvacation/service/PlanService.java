@@ -11,6 +11,8 @@ public interface PlanService {
 
     Long createPlan(PlanCreateDTO planDTO);
 
+    void deletePlan(Long id);
+
     List<PlanSummaryDTO> getAll(int pageNo, int pageSize);
 
     PlansSummaryPages getAll(int page, int pageSize, String status, String sortBy, String sortOrder);
