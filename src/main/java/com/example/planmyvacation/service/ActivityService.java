@@ -12,6 +12,6 @@ public interface ActivityService {
 
     public ActivityDTO getActivityById(Long id);
 
-    public ActivityDTO mapToDTO(Activity activity);
+//    public ActivityDTO mapToDTO(Activity activity);
 
 }

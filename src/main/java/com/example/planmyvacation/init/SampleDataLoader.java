@@ -71,7 +71,6 @@ public class SampleDataLoader implements CommandLineRunner {
 
         initSampleData();
 
-//        loadCareers();
         loadCountriesAndCities(countries);
         loadLocations();
         loadUsersAndRoles();
@@ -80,21 +79,6 @@ public class SampleDataLoader implements CommandLineRunner {
         loadPlans();
     }
 
-    /*private void loadCareers() {
-
-        if (careerRepository.count() > 0) return;
-
-        List<Career> careers = IntStream.rangeClosed(1, 5)
-                .mapToObj(i -> new Career()
-                        .setCategory(faker.job().field())
-                        .setTitle(faker.job().title())
-                        .setDescription(String.join(" ", faker.lorem().sentences(3)))
-                        .setPublished(Utils.getRandom(1, 15) + " days ago.")
-                )
-                .toList();
-
-        careerRepository.saveAll(careers);
-    }*/
 
     private void loadCountriesAndCities(List<Country> countries) {
 
@@ -237,11 +221,14 @@ public class SampleDataLoader implements CommandLineRunner {
         int startYear = 2020;
         int endYear = 2025;
 
+
         for (int i = 0; i < PlansNumToGenerate; i++) {
 
             int year = Utils.getRandom(startYear, endYear);
-            String fromDate = year + "-10-11";
-            String toDate = year + "-10-11";
+            int startDay = Utils.getRandom(11, 20);
+            int endDay = startDay + Utils.getRandom(2, 5);
+            String fromDate = year + "-10-" + startDay;
+            String toDate = year + "-10-" + endDay;
 
             String city = cities.get(Utils.getRandom(0, cities.size() - 1));
 

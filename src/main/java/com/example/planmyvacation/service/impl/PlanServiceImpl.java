@@ -1,6 +1,7 @@
 package com.example.planmyvacation.service.impl;
 
 import com.example.planmyvacation.model.PlansSummaryPages;
+import com.example.planmyvacation.model.convert.PlanDTOConverter;
 import com.example.planmyvacation.model.dto.*;
 import com.example.planmyvacation.model.entity.*;
 import com.example.planmyvacation.repository.LocationRepository;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,24 +30,24 @@ import java.util.List;
 @Service
 public class PlanServiceImpl implements PlanService {
 
+    private final PlanDTOConverter converter;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
     private final PlanRepository planRepository;
-    private final ItineraryService itineraryService;
-    private final ActivityService activityService;
     private final PlaceService placeService;
 
     public PlanServiceImpl(
+            PlanDTOConverter converter,
             LocationRepository locationRepository,
             UserRepository userRepository,
             PlanRepository planRepository,
-            ItineraryService itineraryService,
-            ActivityService activityService, PlaceService placeService) {
+            PlaceService placeService
+    ) {
+
+        this.converter = converter;
         this.locationRepository = locationRepository;
         this.userRepository = userRepository;
         this.planRepository = planRepository;
-        this.itineraryService = itineraryService;
-        this.activityService = activityService;
         this.placeService = placeService;
     }
 
@@ -70,7 +70,7 @@ public class PlanServiceImpl implements PlanService {
         List<Plan> listOfPlans = plans.getContent();
 
         return listOfPlans.stream()
-                .map(this::mapToSummaryDTO)
+                .map(converter::mapPlanToPlanSummaryDTO)
                 .toList();
     }
 
@@ -97,7 +97,7 @@ public class PlanServiceImpl implements PlanService {
 
         List<Plan> listOfPlans = plans.getContent();
 
-        List<PlanSummaryDTO> content = listOfPlans.stream().map(this::mapToSummaryDTO).toList();
+        List<PlanSummaryDTO> content = listOfPlans.stream().map(converter::mapPlanToPlanSummaryDTO).toList();
 
         return new PlansSummaryPages()
                 .setContent(content)
@@ -113,7 +113,7 @@ public class PlanServiceImpl implements PlanService {
 
         return planRepository
                 .findById(id)
-                .map(this::mapToDetailsDTO)
+                .map(converter::mapPlanToPlanDetailsDTO)
                 .orElse(null);
     }
 
@@ -190,46 +190,6 @@ public class PlanServiceImpl implements PlanService {
     public void addItineraryActivity(Long planId, Long itineraryId, Long placeId) {
 
         planRepository.addItineraryActivity(placeId, itineraryId, planId);
-    }
-
-    private PlanDetailsDTO mapToDetailsDTO(Plan plan) {
-
-        LocalDate startDate = Utils.getLocalDate(plan.getStartDate());
-        LocalDate endDate = Utils.getLocalDate(plan.getEndDate());
-
-        List<PlaceDTO> myPlaces = plan.getMyPlaces().stream()
-                .map(placeService::mapToDTO)
-                .toList();
-
-        List<ItineraryDTO> itineraries = plan.getItineraries()
-                .stream()
-                .map(itineraryService::mapToDTO)
-                .toList();
-
-        return new PlanDetailsDTO()
-                .setId(plan.getId())
-                .setLocation(plan.getLocation())
-                .setStartDate(startDate)
-                .setEndDate(endDate)
-                .setMyPlaces(myPlaces)
-                .setItineraries(itineraries)
-                .setUser(plan.getUser())
-                .setActive(plan.isActive());
-    }
-
-    private PlanSummaryDTO mapToSummaryDTO(Plan plan) {
-
-        LocalDate startDate = Utils.getLocalDate(plan.getStartDate());
-        LocalDate endDate = Utils.getLocalDate(plan.getEndDate());
-
-        return new PlanSummaryDTO()
-                .setId(plan.getId())
-                .setCity(plan.getLocation().getCity().getName())
-                .setCountry(plan.getLocation().getCountry().getName())
-                .setStartDate(startDate)
-                .setEndDate(endDate)
-                .setUser(plan.getUser())
-                .setActive(plan.isActive());
     }
 
 }

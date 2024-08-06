@@ -13,6 +13,6 @@ public interface ItineraryService {
 
     public ItineraryDTO getItineraryById(Long id);
 
-    public ItineraryDTO mapToDTO(Itinerary itinerary);
+//    public ItineraryDTO mapToDTO(Itinerary itinerary);
 
 }
