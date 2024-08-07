@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modals</title>
+  <title>Tables</title>
 
   <!-- Bootstrap CSS -->
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
@@ -38,32 +38,12 @@
             OPEN
           </a>
 
-          <!--<button class="btn btn-outline-primary btn-sm w-50"
-                  hx-confirm="Are you sure?"
-                  hx-target="closest tr"
-                  hx-swap="outerHTML swap:1s"
-                  hx-trigger="click"
-                  th:attr="hx-get=@{#}"
-                  th:text="Open">
-            OPEN
-          </button>-->
-
           <!-- BUTTON: DELETE PLAN -->
           <button th:hx-delete="@{'/plans/' + *{id}}"
                   class="btn btn-outline-danger btn-sm w-50"
                   th:text="Delete">
             DELETE
           </button>
-
-          <!--<button class="btn btn-outline-danger btn-sm w-50"
-                  hx-confirm="Are you sure?"
-                  hx-target="closest tr"
-                  hx-swap="outerHTML swap:1s"
-                  hx-trigger="click"
-                  th:attr="hx-delete=@{#}"
-                  th:text="Delete">
-            DELETE
-          </button>-->
 
         </div>
       </td>
@@ -120,6 +100,102 @@
   </div>
   <!-- FRAGMENT: TABLE PAGINATION END -->
 
+
+
+  <!-- FRAGMENT: USERS TABLE -->
+  <tbody th:fragment="users" id="users-table">
+    <tr th:each="user: ${usersData}">
+      <td th:text="${user.id}">ID</td>
+      <td th:text="${user.username}" class="text-start ps-5">USERNAME</td>
+      <td th:text="${user.email}" class="text-start ps-5">EMAIL</td>
+      <td th:text="${user.role}" class="text-start ps-5">ROLE</td>
+      <td th:object="${user}">
+        <div class="btn-group w-75" role="group" aria-label="Basic mixed styles example">
+
+          <!-- BUTTON: OPEN PLAN -->
+          <button th:hx-get="@{'/users/' + *{id}}"
+                  hx-target="closest tr"
+                  hx-swap="outerHTML"
+                  class="btn btn-warning btn-sm w-50"
+                  th:text="Edit">
+            EDIT
+          </button>
+
+          <!-- BUTTON: DELETE PLAN -->
+          <button th:hx-delete="@{'/users/' + *{id}}"
+                  hx-confirm="Are you sure?"
+                  hx-target="closest tr"
+                  hx-swap="outerHTML swap:1s"
+                  class="btn btn-danger btn-sm w-50"
+                  th:text="Delete">
+            DELETE
+          </button>
+
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!-- FRAGMENT: USERS TABLE END -->
+
+
+  <!-- FRAGMENT: USER ROW EDIT -->
+  <tr th:fragment="userFragment" id="user-edit">
+    <form id="editUserForm" >
+
+      <!-- USERNAME -->
+      <td th:field="${userData.id}" id="id" name="id">ID</td>
+
+<!--      <td>-->
+<!--        <input th:field="${userData.id}" class="form-control" id="id" name="id" placeholder="id" type="number">-->
+<!--      </td>-->
+
+      <!-- USERNAME -->
+      <td class="text-start ps-5">
+        <input th:field="${userData.username}" class="form-control" id="username" name="username" placeholder="username" type="text">
+      </td>
+
+      <!-- EMAIL -->
+      <td class="text-start ps-5">
+        <input th:field="${userData.email}" class="form-control" id="email" name="email" placeholder="email" type="text">
+      </td>
+
+      <!-- ROLE -->
+      <td class="text-start ps-5">
+        <input th:field="${userData.role}" class="form-control" id="role" name="role" placeholder="role" type="text" list="rolesList">
+        <datalist id="rolesList" >
+          <option th:each="userRole: ${allUserRolesData}" th:text="${userRole}">ROLE</option>
+        </datalist>
+      </td>
+
+    </form>
+
+    <!-- BUTTONS: CANCEL / SAVE -->
+    <td>
+      <div class="btn-group w-75" role="group" aria-label="Basic mixed styles example">
+
+        <!-- BUTTON: CANCEL -->
+        <button th:hx-get="@{'/users'}"
+                hx-target="#users-table"
+                hx-swap="outerHTML"
+                class="btn btn-secondary btn-sm w-50"
+                th:text="Cancel">
+          CANCEL
+        </button>
+
+        <!-- BUTTON: SAVE -->
+        <button th:hx-put="@{'/users/' + ${userData.id}}"
+                hx-include="#username, #email, #role"
+                hx-target="#users-table"
+                hx-swap="outerHTML"
+                hx-trigger="click"
+                class="btn btn-primary btn-sm w-50"
+                th:text="Save">
+          SAVE
+        </button>
+      </div>
+    </td>
+  </tr>
+  <!-- FRAGMENT: USER ROW EDIT -->
 
 
 

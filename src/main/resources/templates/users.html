@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:hx-on="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Users - Plan My Vacation</title>
+    <title>Plans - Plan My Vacation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -16,6 +16,12 @@
 
     <script type="text/javascript" th:src="@{/js/navbarLanguageSelect.js}" defer></script>
 
+    <style>
+        tr.htmx-swapping td {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+    </style>
 </head>
 <body>
 
@@ -28,62 +34,81 @@
 
 
     <!-- PAGE MAIN CONTENT -->
-    <div class="col-12 g-0 p-0 row flex-grow-1 bg-secondary d-flex justify-content-center">
-        <div class="col-5 justify-content-start border" style="display: flex; flex-direction: column; justify-content: center">
+    <div class="container h-100 d-flex align-items-end flex-column">
 
-            <!-- USERS TABLE -->
-            <table class="table table-hover align-middle"
-                   id="my_table_id"
-                   data-url="data/url.json"
-                   data-id-field="id"
-                   data-editable-emptytext="Default empty text."
-                   data-editable-url="/my/editable/update/path">
-                <thead class="table-success">
-                <tr>
-                    <th scope="col" class="col-4" data-field="username" data-editable="true">Username</th>
-                    <th scope="col" class="col-4">Email</th>
-                    <th scope="col" class="col-2">Role</th>
-                    <th scope="col" class="col-2"></th>
-                </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                <tr>
-                    <td>John</td>
-                    <td>john@example.com</td>
-                    <td>admin</td>
-                    <td>
-                        <div class="row">
-                            <button class="col-5 btn btn-sm btn-success me-2" type="button">Edit</button>
-                            <button class="col-5 btn btn-sm btn-danger me-2" type="button">Delete</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nana</td>
-                    <td id="td_email">nana@example.com</td>
-                    <td>user</td>
-                    <td>
-                        <div class="row">
-                            <button id="btn_edit" class="col-5 btn btn-sm btn-success me-2" type="button">Edit</button>
-                            <button class="col-5 btn btn-sm btn-danger me-2" type="button">Delete</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>David</td>
-                    <td>david@example.com</td>
-                    <td>user</td>
-                    <td>
-                        <div class="row">
-                            <button class="col-5 btn btn-sm btn-success me-2" type="button">Edit</button>
-                            <button class="col-5 btn btn-sm btn-danger me-2" type="button">Delete</button>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <!-- FILTER BUTTONS: ACTIVE / INACTIVE / ALL -->
+        <!--<div class="col-3 mx-auto d-flex justify-content-center">
+            <div class="btn-group btn-group-sm py-3 w-100" role="group" aria-label="Basic radio toggle button group">
 
-        </div>
+                &lt;!&ndash; FILTER: ACTIVE &ndash;&gt;
+                <input
+                        hx-get="/plans?status=active"
+                        hx-swap="outerHTML"
+                        hx-target="#plans-table"
+                        hx-trigger="click"
+                        id="btnradio1"
+                        name="plans-status"
+                        type="radio"
+                        class="btn-check plans-status"
+                        autocomplete="off"
+                        value="active"
+                        data-qp-class="plans-status"
+                        checked>
+                <label class="col-12 btn btn-outline-primary" for="btnradio1" th:text="Active">ACTIVE</label>
+
+                &lt;!&ndash; FILTER: INACTIVE &ndash;&gt;
+                <input
+                        hx-get="/plans?status=inactive"
+                        hx-swap="outerHTML"
+                        hx-target="#plans-table"
+                        hx-trigger="click"
+                        id="btnradio2"
+                        name="plans-status"
+                        type="radio"
+                        class="btn-check plans-status"
+                        autocomplete="off"
+                        value="inactive"
+                        data-qp-class="plans-status">
+                <label class="col-12 btn btn-outline-primary" for="btnradio2" th:text="Inactive">INACTIVE</label>
+
+                &lt;!&ndash; FILTER: ALL &ndash;&gt;
+                <input
+                        hx-get="/plans?status=all"
+                        hx-swap="outerHTML"
+                        hx-target="#plans-table"
+                        hx-trigger="click"
+                        id="btnradio3"
+                        name="plans-status"
+                        type="radio"
+                        class="btn-check plans-status"
+                        autocomplete="off"
+                        th:value="all"
+                        data-qp-class="plans-status">
+                <label class="col-12 btn btn-outline-primary" for="btnradio3" th:text="All">ALL</label>
+            </div>
+        </div>-->
+
+        <!-- TABLE PLANS -->
+        <table th:object="${usersData}" class="table table-sm table-hover align-middle text-center">
+            <thead>
+            <tr class="table-primary fs-5">
+                <th scope="col" class="col-1 py-2" th:text="ID">
+                    ID </th>
+                <th scope="col" class="col-3 py-2" th:text="Username">
+                    USERNAME </th>
+                <th scope="col" class="col-3 py-2" th:text="Email">
+                    EMAIL </th>
+                <th scope="col" class="col-2 py-2" th:text="Role">
+                    ROLE </th>
+                <th scope="col" class="col-2 py-2">
+                    &nbsp; </th>
+            </thead>
+            <tbody th:replace="~{fragments/tables::users}"></tbody>
+        </table>
+
+        <!-- TABLE PAGINATION -->
+<!--        <div th:replace="~{fragments/tables::pagination}"></div>-->
+
     </div>
 
 

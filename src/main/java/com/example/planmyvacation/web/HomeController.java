@@ -29,11 +29,11 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @GetMapping("/users")
+    /*@GetMapping("/users")
     public String getUsers() {
 
         return "users";
-    }
+    }*/
 
     @GetMapping("/statistics")
     public String getStatistics() {

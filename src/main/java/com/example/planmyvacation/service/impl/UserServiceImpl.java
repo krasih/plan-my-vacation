@@ -1,61 +1,69 @@
 package com.example.planmyvacation.service.impl;
 
+import com.example.planmyvacation.model.convert.UserDTOConverter;
 import com.example.planmyvacation.model.dto.UserRegisterDTO;
+import com.example.planmyvacation.model.dto.UserSummaryDTO;
 import com.example.planmyvacation.model.entity.User;
-import com.example.planmyvacation.model.enums.UserRole;
-import com.example.planmyvacation.repository.RoleRepository;
 import com.example.planmyvacation.repository.UserRepository;
 import com.example.planmyvacation.service.UserService;
-import org.modelmapper.ModelMapper;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final MessageSource messageSource;
+    private final UserDTOConverter converter;
 
-    public UserServiceImpl(
-            ModelMapper modelMapper,
-            PasswordEncoder passwordEncoder,
-            UserRepository userRepository,
-            RoleRepository roleRepository, MessageSource messageSource) {
-        this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
+    public UserServiceImpl( UserRepository userRepository, UserDTOConverter converter ) {
+
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.messageSource = messageSource;
+        this.converter = converter;
     }
+
 
     @Override
     public boolean registerUser(UserRegisterDTO userDTO) {
 
-        // Check if password and confirmPassword matches
-//        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) return false;
-
-        // Check if user with such username or email exists
-//        Optional<User> existingUser = userRepository.findByUsernameOrEmail(userDTO.getUsername(), userDTO.getEmail());
-//        if (existingUser.isPresent()) return false;
-
-        User user = mapDtoToEntity(userDTO);
+        User user = converter.mapUserRegisterDTOToUser(userDTO);
 
         userRepository.save(user);
         return true;
     }
 
-    private User mapDtoToEntity(UserRegisterDTO dto) {
-        User user = modelMapper.map(dto, User.class);
-        user.setRole(roleRepository.getByRole(UserRole.USER));
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+    @Override
+    public List<UserSummaryDTO> getAll() {
 
-        return user;
+        return userRepository.findAll().stream()
+                .map(converter::mapUserToUserSummaryDTO)
+                .toList();
+    }
+
+    @Override
+    public UserSummaryDTO getUserById(Long id) {
+
+        return userRepository.findById(id)
+                .map(converter::mapUserToUserSummaryDTO)
+                .orElse(null);
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        userRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public void update(UserSummaryDTO userSummaryDTO) {
+
+        userRepository.updateUserById(
+                userSummaryDTO.getId(),
+                userSummaryDTO.getUsername(),
+                userSummaryDTO.getEmail(),
+                userSummaryDTO.getRole()
+        );
     }
 }
